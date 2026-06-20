@@ -1,4 +1,4 @@
-import { useState, useCallback, lazy, Suspense } from 'react'
+import { useState, useCallback, useEffect, lazy, Suspense } from 'react'
 import mrpImg    from './assets/mrp_skin1.png'
 import mrpSecret from './assets/mrp_skin3.png'
 import { CARIÑO_PHRASES } from './data/content'
@@ -108,17 +108,40 @@ function SecretModal({ onClose }) {
 }
 
 /* ── Main App ── */
-const VIEWS = { landing: Landing, hub: Hub, clasico: Clasico, agente: Agente, rey: Rey, nevado: Nevado, timeline: Timeline, house: House, viewer: Viewer3D }
+const VIEWS = {
+  landing: Landing, hub: Hub, clasico: Clasico, agente: Agente,
+  rey: Rey, nevado: Nevado, timeline: Timeline, house: House, viewer: Viewer3D,
+}
 
 export default function App() {
-  const [view, setView]           = useState('landing')
-  const [activated, setActivated] = useState(false)
-  const [showCarino, setShowCarino] = useState(false)
-  const [showSecret, setShowSecret] = useState(false)
+  const [view,        setView]        = useState('landing')
+  const [activated,   setActivated]   = useState(false)
+  const [showCarino,  setShowCarino]  = useState(false)
+  const [showSecret,  setShowSecret]  = useState(false)
+
+  /* ── Sync browser history with SPA view ── */
+  useEffect(() => {
+    window.history.replaceState({ view: 'landing' }, '')
+
+    const onPop = (e) => {
+      const v = e.state?.view ?? 'landing'
+      if (v === 'landing') setActivated(false)
+      setView(v)
+    }
+    window.addEventListener('popstate', onPop)
+    return () => window.removeEventListener('popstate', onPop)
+  }, [])
+
+  const navigateTo = useCallback((to) => {
+    if (to === 'landing') setActivated(false)
+    setView(to)
+    window.history.pushState({ view: to }, '')
+  }, [])
 
   const activate = useCallback(() => {
     setActivated(true)
     setView('hub')
+    window.history.pushState({ view: 'hub' }, '')
   }, [])
 
   const CurrentView = VIEWS[view] ?? Hub
@@ -131,7 +154,7 @@ export default function App() {
         <Suspense fallback={<div className="viewer-loading">Cargando 3D…</div>}>
           {view === 'landing'
             ? <Landing onActivate={activate} />
-            : <CurrentView navigate={setView} />
+            : <CurrentView navigate={navigateTo} />
           }
         </Suspense>
       </div>

@@ -50,13 +50,9 @@ function StreakCounter({ days }) {
     <div className="streak-wrap">
       <div className="streak-panel">
 
-        {/* Título estilo RACHA DIARIA */}
         <h2 className="streak-title">DÍAS JUNTOS</h2>
 
-        {/* Fila: calendario izquierda + info derecha */}
         <div className="streak-main">
-
-          {/* Calendario con fuego */}
           <div
             ref={calRef}
             className="streak-cal-wrap"
@@ -75,15 +71,12 @@ function StreakCounter({ days }) {
             <div className="streak-cal-official">
               <img src={calendarIcon} alt="" className="streak-cal-icon" />
               <div className="streak-cal-overlay">
-                <div className="streak-cal-number">
-                  <AnimatedCounter target={days} />
-                </div>
+                <div className="streak-cal-number"><AnimatedCounter target={days} /></div>
                 <div className="streak-cal-star">✨</div>
               </div>
             </div>
           </div>
 
-          {/* Info derecha */}
           <div className="streak-info">
             <p className="streak-info-label">RACHA ACTUAL</p>
             <p className="streak-info-days">
@@ -92,10 +85,8 @@ function StreakCounter({ days }) {
             </p>
             <p className="streak-info-date">desde el 24 · mayo · 2022 💙</p>
           </div>
-
         </div>
 
-        {/* Pergamino inferior con monedas */}
         <div className="streak-scroll-area">
           <img src={fortuneIcon} alt="" className="streak-coin streak-coin-l" />
           <div className="streak-scroll">
@@ -123,8 +114,9 @@ export default function Hub({ navigate }) {
   return (
     <div className="hub">
       <div className="hub-status">
+        <button className="hub-back-btn" onClick={() => navigate('landing')}>← Salir</button>
         <div className="status-dot" />
-        <span>Protocolo Mr. P activo · Modo: Amor infinito</span>
+        <span className="hub-status-text">Protocolo Mr. P activo · Modo: Amor infinito</span>
       </div>
 
       <div className="hub-hero">
