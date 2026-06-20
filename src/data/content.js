@@ -1,0 +1,165 @@
+export const ANNIVERSARY = new Date('2022-05-24T00:00:00')
+
+export const REASONS = [
+  "Tu forma de reír cuando algo de verdad te divierte.",
+  "Que me extrañes aunque nos hayamos visto hace pocas horas.",
+  "Tu determinación para todo lo que te propones.",
+  "Que Mr. P sea tu brawler favorito — razón muy válida 🐧",
+  "Tu honestidad, siempre, incluso cuando no es lo que quiero escuchar.",
+  "Cómo me haces sentir en casa solo con estar cerca.",
+  "Tus ocurrencias que nadie más entiende como yo.",
+  "Tu fuerza cuando todo parece difícil.",
+  "Cómo te brillan los ojos cuando algo te emociona.",
+  "Que seas tan tú, sin pedirle permiso a nadie.",
+  "Tu manera de abrazar.",
+  "Que recuerdes los detalles que yo creo que nadie nota.",
+  "Tu voz cuando me dices 'Mr. P'.",
+  "Que te rías de mis chistes malos igual.",
+  "Que siempre sepas cuándo necesito silencio y cuándo compañía.",
+  "Tu manera de ver el mundo, diferente a todos.",
+  "Que hayas elegido quedarte.",
+  "Que hagas que los días normales se sientan especiales.",
+  "Tu carácter, aunque a veces me ganes 😅",
+  "Lo que me haces sentir con solo mirarte.",
+  "Tu amor por los detalles pequeños.",
+  "Que seas mi primer pensamiento en la mañana.",
+  "Que ya seamos un 'nosotros'.",
+  "Tus planes inesperados que siempre valen la pena.",
+  "Lo mucho que cuidas a los que quieres.",
+  "Que tengas un lugar guardado solo para mí.",
+  "Las fotos nuestras que guardo como tesoros.",
+  "Lo mucho que me haces crecer sin proponértelo.",
+  "Que seas mi calma en los días difíciles.",
+  "Que cada vez que te veo siga siendo especial.",
+  "Tu sentido del humor, única en el mundo.",
+  "Que existas en el mismo tiempo y lugar que yo.",
+  "Cómo me miras cuando crees que no me doy cuenta.",
+  "Tu manera de sorprenderme sin aviso.",
+  "Que no necesites fingir nada conmigo.",
+  "Lo que aprendo de ti cada día.",
+  "Que me hagas sentir que puedo con todo.",
+  "Tu manera de hacer que cada momento valga.",
+  "Que llevemos 4 años y siga queriendo más.",
+  "Lo orgulloso que me haces sentir de ti.",
+  "Que tu felicidad sea también la mía.",
+  "Cómo me conoces mejor de lo que yo me conozco.",
+  "Que no te rindas, ni conmigo ni con nada.",
+  "Tu valentía para todo lo que te da miedo.",
+  "Que seas la razón de muchos de mis mejores días.",
+  "Tu manera de llenar los espacios vacíos.",
+  "Que seas exactamente quien eres, sin filtros.",
+  "Lo mucho que significas para todos los que te rodean.",
+  "Que seas la persona con quien quiero construir todo.",
+  "Que seas Dayana. Solo eso ya es suficiente.",
+]
+
+export const MISSIONS = [
+  { emoji: "🎬", text: "Ver esa saga de películas que tenemos pendiente" },
+  { emoji: "🍽️", text: "Ir juntos a ese restaurante nuevo que tanto queremos probar" },
+  { emoji: "✈️", text: "Planear el próximo viaje juntos" },
+  { emoji: "🎮", text: "Jugar Brawl Stars hasta que uno se rinda (spoiler: yo)" },
+  { emoji: "📸", text: "Hacer una sesión de fotos solo nosotros dos" },
+  { emoji: "🎂", text: "Inventar una celebración sin ningún motivo" },
+  { emoji: "🌙", text: "Quedarnos despiertos hasta tarde viendo series" },
+  { emoji: "🎁", text: "Comprarte una sorpresa sin ninguna razón" },
+  { emoji: "🎡", text: "Ir juntos a un parque de atracciones" },
+  { emoji: "💌", text: "Escribirnos cartas a mano, al estilo antiguo" },
+  { emoji: "🍦", text: "Probar todos los sabores de helado de ese lugar" },
+  { emoji: "🎤", text: "Karaoke, aunque los dos cantemos horrible" },
+]
+
+export const CARIÑO_PHRASES = [
+  { text: "Eres la persona más especial que conozco.", emoji: "💜" },
+  { text: "Ese día que nos reímos hasta llorar... ese soy yo contigo, siempre.", emoji: "😂" },
+  { text: "Eres suficiente. Más que suficiente.", emoji: "⭐" },
+  { text: "Estoy aquí, aunque no esté físicamente.", emoji: "🤍" },
+  { text: "Eres mi lugar favorito.", emoji: "🏠" },
+  { text: "Nadie ríe como tú. Nadie.", emoji: "✨" },
+  { text: "Estoy orgulloso de ti. Siempre.", emoji: "🏆" },
+  { text: "Te extraño ya.", emoji: "🐧" },
+  { text: "Esto pasará. Yo no me voy.", emoji: "🌊" },
+  { text: "Eres la mejor parte de mis días.", emoji: "☀️" },
+  { text: "Mr. P te manda saludos y yo te mando todo lo demás.", emoji: "💼" },
+  { text: "Recuerda cómo empezó todo. Vale la pena.", emoji: "🌱" },
+  { text: "Tú sí puedes con esto.", emoji: "💪" },
+  { text: "Cuídate como yo te cuido.", emoji: "🫂" },
+  { text: "Mañana va a ser mejor. Lo prometo.", emoji: "🌅" },
+]
+
+export const TIMELINE = [
+  {
+    year: 1, label: "Año 1 · 2022", color: "#f43f5e", emoji: "🌱",
+    title: "El comienzo de todo",
+    events: [
+      "24 de mayo: el día que todo empezó.",
+      "Los primeros mensajes que costaba terminar.",
+      "La primera vez que elegimos estar juntos.",
+      "Descubriendo que éramos algo más que amigos.",
+    ],
+  },
+  {
+    year: 2, label: "Año 2 · 2023", color: "#a855f7", emoji: "💜",
+    title: "Creciendo juntos",
+    events: [
+      "Aprendiendo a conocernos de verdad.",
+      "Los primeros obstáculos superados juntos.",
+      "Momentos que se convirtieron en recuerdos favoritos.",
+      "Demostrando que lo nuestro era para quedarse.",
+    ],
+  },
+  {
+    year: 3, label: "Año 3 · 2024", color: "#f59e0b", emoji: "⭐",
+    title: "Más fuertes que nunca",
+    events: [
+      "Superando todo lo que se puso en el camino.",
+      "Celebraciones que se sintieron únicas.",
+      "Siendo el apoyo del otro cuando más se necesitaba.",
+      "Tres años y seguíamos eligiéndonos.",
+    ],
+  },
+  {
+    year: 4, label: "Año 4 · 2025–2026", color: "#10b981", emoji: "🏆",
+    title: "Disney, universidad y sueños reales",
+    events: [
+      "Disney París: el sueño que se hizo realidad.",
+      "La universidad y los logros que tanto costaron.",
+      "Metas cumplidas juntos, una por una.",
+      "Demostrando que los sueños grandes se pueden.",
+    ],
+  },
+  {
+    year: 5, label: "Año 5 · 2027", color: "#475569", emoji: "🔮",
+    title: "En construcción...",
+    events: [
+      "Este capítulo todavía lo estamos escribiendo.",
+      "Nuevas aventuras que aún no podemos imaginar.",
+      "Más recuerdos que llegarán cuando menos los esperemos.",
+      "El futuro que construimos juntos, día a día.",
+    ],
+    isBuilding: true,
+  },
+]
+
+export const HOUSE_ROOMS = [
+  { emoji: "🛋️", name: "La sala",     note: "Aquí vamos a ver todas esas películas pendientes... y quedarnos dormidos a la mitad. Sin culpa." },
+  { emoji: "📺", name: "La tele",     note: "Seguimos sin decidir quién limpia el control remoto. Spoiler: ninguno de los dos. Jamás." },
+  { emoji: "🍳", name: "La cocina",   note: "Aquí voy a aprender a cocinar ese plato que te gusta. Eventualmente. Lo prometo. Casi." },
+  { emoji: "🛏️", name: "El cuarto",   note: "Tu lado de la cama siempre estará listo. Y siempre va a ser el mejor lado, porque tú eres la mejor." },
+  { emoji: "🌱", name: "Las plantas", note: "Prometemos cuidarlas esta vez. Esta vez sí. En serio. Bueno... lo vamos a intentar." },
+  { emoji: "🐾", name: "La mascota",  note: "Aquí va a vivir el peludo que vamos a adoptar. Ya casi tiene nombre, solo falta decidirlo juntos." },
+]
+
+export const EMERGENCY_MESSAGES = [
+  { title: "Lo que sientes es válido",   text: "No tienes que estar bien todo el tiempo. Está bien no estar bien. Yo te espero sin prisa." },
+  { title: "No estás sola",              text: "Estoy aquí aunque no esté físicamente. Puedes llamarme, escribirme, lo que sea. Estoy." },
+  { title: "Eres más fuerte de lo que crees", text: "Lo he visto muchas veces. Con mis propios ojos. Puedes con esto también." },
+  { title: "Esto va a pasar",            text: "Este momento difícil es temporal. Tú no eres temporal. Nosotros no somos temporales." },
+  { title: "Respira",                    text: "Tres respiraciones lentas. Yo aquí. Tú ahí. Y todo va a estar bien." },
+]
+
+export const CLASICO_MESSAGES = [
+  { time: "Para cuando me extrañes en silencio",     text: "Cada vez que el silencio se hace largo y me extrañas pero no lo dices, quiero que sepas que yo también. Siempre." },
+  { time: "Para cuando quieras que estuviera ahí",  text: "Hay momentos que sé que te gustaría que estuviera. Yo también quiero estar. Pero mientras no puedo, este lugar es lo más cercano." },
+  { time: "Para cuando no sepas qué decir",          text: "No hace falta decir nada. A veces solo querer estar cerca ya lo dice todo." },
+  { time: "Para cuando el día fue demasiado largo",  text: "Ese día largo y cansado que tuviste... lo vi. Aunque no estuviera. Y estoy orgulloso de que lo hayas atravesado." },
+]

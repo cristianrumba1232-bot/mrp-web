@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -8 100 128" fill="none">
+  <defs>
+    <radialGradient id="outerF" cx="50%" cy="70%" r="60%">
+      <stop offset="0%"  stop-color="#ff6600"/>
+      <stop offset="60%" stop-color="#dd2200"/>
+      <stop offset="100%" stop-color="#aa0000"/>
+    </radialGradient>
+    <radialGradient id="innerF" cx="50%" cy="65%" r="55%">
+      <stop offset="0%"  stop-color="#ffff44"/>
+      <stop offset="50%" stop-color="#ffdd00"/>
+      <stop offset="100%" stop-color="#ffaa00"/>
+    </radialGradient>
+  </defs>
+
+  <!--
+    3 fotogramas: S-derecha → S-izquierda → S-derecha (loop continuo sin pausas)
+    S-derecha: panza desplazada +10 a la derecha, punta -8 a la izquierda
+    S-izquierda: panza -10 izquierda, punta +8 derecha
+    El neutro se forma solo al interpolarse entre las dos S — sin pausa forzada
+  -->
+
+  <!-- Llama roja con borde negro automático -->
+  <path
+    fill="url(#outerF)"
+    stroke="#111" stroke-width="10"
+    stroke-linejoin="round" stroke-linecap="round"
+    paint-order="stroke fill"
+    d="M50 110 C27 110 12 94 14 74 C16 56 28 44 40 32 C41 20 42 10 42 4 C46 8 70 20 76 32 C88 44 96 56 92 74 C92 94 73 110 50 110Z">
+    <animate attributeName="d"
+      dur="1.8s" repeatCount="indefinite"
+      calcMode="spline"
+      keyTimes="0;0.5;1"
+      keySplines="0.45 0 0.55 1;0.45 0 0.55 1"
+      values="
+        M50 110 C27 110 12 94 14 74 C16 56 28 44 40 32 C41 20 42 10 42 4  C46 8  70 20 76 32 C88 44 96 56 92 74 C92 94 73 110 50 110Z;
+        M50 110 C27 110 12 94 10 74 C8  56 16 44 24 32 C26 20 52 8  58 4  C60 8  62 20 60 32 C70 42 80 56 84 74 C84 94 73 110 50 110Z;
+        M50 110 C27 110 12 94 14 74 C16 56 28 44 40 32 C41 20 42 10 42 4  C46 8  70 20 76 32 C88 44 96 56 92 74 C92 94 73 110 50 110Z
+      "/>
+  </path>
+
+  <!-- Núcleo amarillo -->
+  <path
+    fill="url(#innerF)"
+    d="M50 100 C34 100 22 88 25 72 C25 59 34 50 44 42 C47 30 44 18 42 12 C46 18 66 30 72 42 C80 50 86 59 82 72 C82 88 66 100 50 100Z">
+    <animate attributeName="d"
+      dur="1.8s" repeatCount="indefinite"
+      calcMode="spline"
+      keyTimes="0;0.5;1"
+      keySplines="0.45 0 0.55 1;0.45 0 0.55 1"
+      values="
+        M50 100 C34 100 22 88 25 72 C25 59 34 50 44 42 C47 30 44 18 42 12 C46 18 66 30 72 42 C80 50 86 59 82 72 C82 88 66 100 50 100Z;
+        M50 100 C34 100 22 88 19 72 C19 59 22 50 28 42 C33 30 52 18 58 12 C58 18 56 30 56 42 C64 50 76 59 74 72 C74 88 66 100 50 100Z;
+        M50 100 C34 100 22 88 25 72 C25 59 34 50 44 42 C47 30 44 18 42 12 C46 18 66 30 72 42 C80 50 86 59 82 72 C82 88 66 100 50 100Z
+      "/>
+  </path>
+</svg>

@@ -1,0 +1,167 @@
+import { useState, useCallback, lazy, Suspense } from 'react'
+import mrpImg    from './assets/mrp_skin1.png'
+import mrpSecret from './assets/mrp_skin3.png'
+import { CARIÑO_PHRASES } from './data/content'
+import Landing  from './components/Landing'
+import Hub      from './components/Hub'
+import Clasico  from './components/Clasico'
+import Agente   from './components/Agente'
+import Rey      from './components/Rey'
+import Nevado   from './components/Nevado'
+import Timeline from './components/Timeline'
+import House    from './components/House'
+import './App.css'
+
+const Viewer3D = lazy(() => import('./components/Viewer3D'))
+
+/* ── Floating hearts & stars (always on) ── */
+function Background() {
+  return (
+    <>
+      <div className="bg-stars" aria-hidden="true">
+        {Array.from({ length: 60 }, (_, i) => (
+          <div key={i} className="bg-star" style={{
+            left: `${(i * 17.3) % 100}%`,
+            top: `${(i * 13.7) % 100}%`,
+            width: `${1 + (i % 3)}px`,
+            height: `${1 + (i % 3)}px`,
+            animationDelay: `${(i * 0.3) % 5}s`,
+          }} />
+        ))}
+      </div>
+      <div className="bg-hearts" aria-hidden="true">
+        {Array.from({ length: 14 }, (_, i) => (
+          <div key={i} className="bg-heart" style={{
+            left: `${(i * 7.3 + 2) % 100}%`,
+            animationDelay: `${(i * 0.9) % 8}s`,
+            animationDuration: `${7 + (i % 4)}s`,
+            fontSize: `${12 + (i % 3) * 6}px`,
+          }}>
+            {i % 3 === 0 ? '💜' : i % 3 === 1 ? '⭐' : '💙'}
+          </div>
+        ))}
+      </div>
+    </>
+  )
+}
+
+/* ── "Necesito cariño" modal ── */
+function CarinoModal({ onClose }) {
+  const [idx, setIdx] = useState(() => Math.floor(Math.random() * CARIÑO_PHRASES.length))
+
+  const next = () => {
+    setIdx((i) => {
+      let n
+      do { n = Math.floor(Math.random() * CARIÑO_PHRASES.length) } while (n === i)
+      return n
+    })
+  }
+
+  const phrase = CARIÑO_PHRASES[idx]
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-card carino-card" onClick={(e) => e.stopPropagation()}>
+        <button className="modal-close" onClick={onClose}>✕</button>
+        <img src={mrpImg} alt="Mr. P" className="modal-mrp" />
+        <span className="carino-emoji">{phrase.emoji}</span>
+        <p className="carino-text">"{phrase.text}"</p>
+        <p className="carino-from">— Christian 💙</p>
+        <button className="carino-next-btn" onClick={next}>Otra ✨</button>
+      </div>
+    </div>
+  )
+}
+
+/* ── Secret "Nivel Crítico" modal ── */
+function SecretModal({ onClose }) {
+  return (
+    <div className="modal-overlay secret-overlay" onClick={onClose}>
+      <div className="modal-card secret-card" onClick={(e) => e.stopPropagation()}>
+        <button className="modal-close" onClick={onClose}>✕</button>
+        <div className="secret-header">
+          <div className="secret-alert-dot" />
+          <span className="secret-tag">NIVEL CRÍTICO ACTIVADO</span>
+        </div>
+        <img src={mrpSecret} alt="Mr. P Count Pengula" className="modal-mrp secret-mrp" />
+        <h2 className="secret-title">Has activado el<br />Protocolo Mr. P</h2>
+        <p className="secret-text">
+          Esto significa que me necesitas ahora mismo.<br />
+          Y yo estoy aquí. Siempre.
+        </p>
+        <div className="secret-message">
+          <p>
+            "Mr. P" no es solo un brawler para nosotros.
+            Es la forma en que me dices que me extrañas sin tener que decirlo.
+            Y cada vez que lo dices, sin importar dónde esté,
+            voy a hacer lo que sea para estar cerca.
+          </p>
+          <p>
+            Así que si activaste esto: te escucho.
+            Te veo. Estoy. 🐧
+          </p>
+        </div>
+        <p className="secret-sign">— Christian, siempre que me necesites 💙</p>
+      </div>
+    </div>
+  )
+}
+
+/* ── Main App ── */
+const VIEWS = { landing: Landing, hub: Hub, clasico: Clasico, agente: Agente, rey: Rey, nevado: Nevado, timeline: Timeline, house: House, viewer: Viewer3D }
+
+export default function App() {
+  const [view, setView]           = useState('landing')
+  const [activated, setActivated] = useState(false)
+  const [showCarino, setShowCarino] = useState(false)
+  const [showSecret, setShowSecret] = useState(false)
+
+  const activate = useCallback(() => {
+    setActivated(true)
+    setView('hub')
+  }, [])
+
+  const CurrentView = VIEWS[view] ?? Hub
+
+  return (
+    <div className="app">
+      <Background />
+
+      <div className={`view-wrap ${view !== 'landing' ? 'view-wrap--in' : ''}`}>
+        <Suspense fallback={<div className="viewer-loading">Cargando 3D…</div>}>
+          {view === 'landing'
+            ? <Landing onActivate={activate} />
+            : <CurrentView navigate={setView} />
+          }
+        </Suspense>
+      </div>
+
+      {/* Floating buttons — visible after activation */}
+      {activated && (
+        <div className="floating-btns">
+          <button
+            className="float-btn carino-btn"
+            onClick={() => setShowCarino(true)}
+            title="Necesito cariño"
+          >
+            🫂<span className="float-label">Necesito cariño</span>
+          </button>
+        </div>
+      )}
+
+      {/* Secret button — very hidden in bottom corner */}
+      {activated && (
+        <button
+          className="secret-trigger"
+          onClick={() => setShowSecret(true)}
+          title="..."
+        >
+          ···
+        </button>
+      )}
+
+      {showCarino && <CarinoModal onClose={() => setShowCarino(false)} />}
+      {showSecret && <SecretModal onClose={() => setShowSecret(false)} />}
+    </div>
+  )
+}

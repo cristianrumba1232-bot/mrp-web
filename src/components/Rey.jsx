@@ -1,0 +1,75 @@
+import { useState } from 'react'
+import mrpImg from '../assets/mrp_skin5.png'
+import { REASONS } from '../data/content'
+
+export default function Rey({ navigate }) {
+  const [unlocked, setUnlocked] = useState(0)
+  const [flash, setFlash] = useState(false)
+
+  const unlock = () => {
+    if (unlocked >= REASONS.length) return
+    setUnlocked((n) => n + 1)
+    setFlash(true)
+    setTimeout(() => setFlash(false), 400)
+  }
+
+  const pct = Math.round((unlocked / REASONS.length) * 100)
+
+  return (
+    <div className="section-page rey-page">
+      <div className="section-header" style={{ '--col': '#f59e0b' }}>
+        <button className="back-btn" onClick={() => navigate('hub')}>← Inicio</button>
+        <div className="section-header-inner">
+          <img
+            src={mrpImg} alt="Mr. P Rey" className="section-mrp"
+            style={{ filter: 'none' }}
+          />
+          <div>
+            <span className="section-skin-tag" style={{ background: '#f59e0b', color: '#1a1a1a' }}>Mr. P Rey</span>
+            <h1 className="section-title">Cosas que amo de ti</h1>
+            <p className="section-subtitle">{unlocked} de {REASONS.length} razones desbloqueadas</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="section-body">
+        <div className="progress-bar-wrap">
+          <div className="progress-bar-fill" style={{ width: `${pct}%`, background: '#f59e0b' }} />
+        </div>
+
+        {/* Unlock button */}
+        {unlocked < REASONS.length && (
+          <div className="rey-unlock-area">
+            <button className={`rey-unlock-btn ${flash ? 'rey-unlock-btn--flash' : ''}`} onClick={unlock}>
+              <span className="rey-unlock-icon">👑</span>
+              <span>Desbloquear razón #{unlocked + 1}</span>
+            </button>
+            <p className="rey-hint">Cada clic revela una nueva razón</p>
+          </div>
+        )}
+
+        {unlocked === REASONS.length && (
+          <div className="rey-complete">
+            <span className="rey-complete-icon">👑</span>
+            <p>Las {REASONS.length} razones desbloqueadas.</p>
+            <p>Y aún me quedo corto.</p>
+          </div>
+        )}
+
+        {/* Reasons list */}
+        <div className="reasons-list">
+          {REASONS.slice(0, unlocked).map((r, i) => (
+            <div
+              key={i}
+              className="reason-item"
+              style={{ animationDelay: `${i * 0.03}s` }}
+            >
+              <span className="reason-num">#{i + 1}</span>
+              <p className="reason-text">{r}</p>
+            </div>
+          )).reverse()}
+        </div>
+      </div>
+    </div>
+  )
+}
