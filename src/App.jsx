@@ -84,27 +84,27 @@ function SecretModal({ onClose }) {
         <button className="modal-close" onClick={onClose}>✕</button>
         <div className="secret-header">
           <div className="secret-alert-dot" />
-          <span className="secret-tag">NIVEL CRÍTICO ACTIVADO</span>
+          <span className="secret-tag">NIVEL OCULTO DESBLOQUEADO</span>
         </div>
         <img src={mrpSecret} alt="Mr. P Count Pengula" className="modal-mrp secret-mrp" />
-        <h2 className="secret-title">Has activado el<br />Protocolo Mr. P</h2>
+        <h2 className="secret-title">El código<br />más especial</h2>
         <p className="secret-text">
-          Esto significa que me necesitas ahora mismo.<br />
-          Y yo estoy aquí. Siempre.
+          Sabías que Mr. P es tu brawler favorito.<br />
+          Yo también lo sabía. Por eso lo elegí.
         </p>
         <div className="secret-message">
           <p>
-            "Mr. P" no es solo un brawler para nosotros.
-            Es la forma en que me dices que me extrañas sin tener que decirlo.
-            Y cada vez que lo dices, sin importar dónde esté,
-            voy a hacer lo que sea para estar cerca.
+            Hice esta página entera para dártela en un momento muy específico:
+            cuando me extrañaras tanto que llegaras al código Mr. P.
+            No cualquier día — solo ese momento en que ya no aguantabas más
+            y me lo dijiste, en persona o por WhatsApp.
           </p>
           <p>
-            Así que si activaste esto: te escucho.
-            Te veo. Estoy. 🐧
+            Ese fue el momento en que yo te mandé esto. Y ahora que estás aquí,
+            ya sabes que cada parte de esta página fue hecha pensando en ti. 🐧
           </p>
         </div>
-        <p className="secret-sign">— Christian, siempre que me necesites 💙</p>
+        <p className="secret-sign">— Christian 💙</p>
       </div>
     </div>
   )
@@ -162,6 +162,11 @@ export default function App() {
   }, [logout])
 
   useEffect(() => {
+    document.body.style.overflow = (showCarino || showSecret) ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [showCarino, showSecret])
+
+  useEffect(() => {
     const audio = new Audio(bgMusic)
     audio.loop = true
     audio.volume = 0.05
@@ -211,6 +216,7 @@ export default function App() {
   const navigateTo = useCallback((to) => {
     if (to === 'landing') { setActivated(false); localStorage.removeItem('mrp_activated') }
     setView(to)
+    window.scrollTo(0, 0)
     window.history.pushState({ view: to }, '')
   }, [])
 
@@ -267,14 +273,13 @@ export default function App() {
         </div>
       )}
 
-      {/* Secret button — very hidden in bottom corner */}
+      {/* Secret button — subtle pill, bottom-left */}
       {activated && (
         <button
           className="secret-trigger"
           onClick={() => setShowSecret(true)}
-          title="..."
         >
-          ···
+          🔒 NIVEL OCULTO
         </button>
       )}
 

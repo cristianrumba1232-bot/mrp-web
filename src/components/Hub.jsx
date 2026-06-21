@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useMemo } from 'react'
 import skin1 from '../assets/mrp_skin1.png'
 import skin2 from '../assets/mrp_skin2.png'
 import skin3 from '../assets/mrp_skin3.png'
@@ -168,6 +168,8 @@ const SKINS = [
 
 export default function Hub({ navigate, skinIdx }) {
   const days = getDays()
+  // Shared negative delay so ALL floating images start at the same animation phase
+  const floatDelay = useMemo(() => `-${((performance.now() % 3500) / 1000).toFixed(3)}s`, [])
 
   return (
     <div className="hub">
@@ -212,7 +214,7 @@ export default function Hub({ navigate, skinIdx }) {
               style={{ '--card-color': s.color }}
               onClick={() => navigate(s.id)}
             >
-              <img src={s.img} alt={`Mr. P ${s.skin}`} className="hub-card-mrp" />
+              <img src={s.img} alt={`Mr. P ${s.skin}`} className="hub-card-mrp" style={{ animationDelay: floatDelay }} />
               <div className="hub-card-body">
                 <span className="hub-card-skin">Mr. P {s.skin}</span>
                 <h3 className="hub-card-label">{s.label}</h3>
@@ -226,13 +228,21 @@ export default function Hub({ navigate, skinIdx }) {
 
       <div className="hub-extras">
         <button className="hub-extra-btn" style={{ '--card-color': '#a855f7' }} onClick={() => navigate('timeline')}>
-          <img src={skin4} alt="True Silver" className="hub-extra-skin" />
-          <div><strong>Línea del tiempo</strong><p>Año 1 hasta hoy — y más allá</p></div>
+          <img src={skin4} alt="True Silver" className="hub-extra-skin" style={{ animationDelay: floatDelay }} />
+          <div>
+            <span className="hub-card-skin">True Silver</span>
+            <strong>Línea del tiempo</strong>
+            <p>Año 1 hasta hoy — y más allá</p>
+          </div>
           <span className="hub-card-arrow">→</span>
         </button>
         <button className="hub-extra-btn" style={{ '--card-color': '#f97316' }} onClick={() => navigate('house')}>
-          <img src={skin6} alt="Mr. Dragonfruit" className="hub-extra-skin" />
-          <div><strong>Nuestra casa del futuro</strong><p>Cada rincón tiene una nota</p></div>
+          <img src={skin6} alt="Mr. Dragonfruit" className="hub-extra-skin" style={{ animationDelay: floatDelay }} />
+          <div>
+            <span className="hub-card-skin">Mr. Dragonfruit</span>
+            <strong>Nuestra casa del futuro</strong>
+            <p>Cada rincón tiene una nota</p>
+          </div>
           <span className="hub-card-arrow">→</span>
         </button>
       </div>
