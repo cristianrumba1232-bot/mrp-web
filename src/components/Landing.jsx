@@ -6,6 +6,13 @@ const BIRTHDAY_OK    = new Set(['28112000', '281100'])
 
 function norm(v) { return v.trim().replace(/\D/g, '') }
 
+function formatDate(value) {
+  const d = value.replace(/\D/g, '').slice(0, 8)
+  if (d.length <= 2) return d
+  if (d.length <= 4) return `${d.slice(0,2)}/${d.slice(2)}`
+  return `${d.slice(0,2)}/${d.slice(2,4)}/${d.slice(4)}`
+}
+
 export default function Landing({ onActivate }) {
   const [visible, setVisible] = useState(false)
   const [step,    setStep]    = useState('welcome')
@@ -96,7 +103,7 @@ export default function Landing({ onActivate }) {
                     type="text"
                     placeholder="dd/mm/aaaa"
                     value={q1}
-                    onChange={e => { setQ1(e.target.value); setError('') }}
+                    onChange={e => { setQ1(formatDate(e.target.value)); setError('') }}
                     autoComplete="off"
                   />
                 </div>
@@ -107,7 +114,7 @@ export default function Landing({ onActivate }) {
                     type="text"
                     placeholder="dd/mm/aaaa"
                     value={q2}
-                    onChange={e => { setQ2(e.target.value); setError('') }}
+                    onChange={e => { setQ2(formatDate(e.target.value)); setError('') }}
                     autoComplete="off"
                   />
                 </div>

@@ -18,7 +18,7 @@ export default function Rey({ navigate }) {
   return (
     <div className="section-page rey-page">
       <div className="section-header" style={{ '--col': '#f59e0b' }}>
-        <button className="back-btn" onClick={() => navigate('hub')}>← Inicio</button>
+        <button className="back-btn" onClick={() => navigate('hub')}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{marginRight:"5px",verticalAlign:"middle"}}><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M9 21V12h6v9"/></svg>Inicio</button>
         <div className="section-header-inner">
           <img
             src={mrpImg} alt="Mr. P Rey" className="section-mrp"
@@ -33,6 +33,15 @@ export default function Rey({ navigate }) {
       </div>
 
       <div className="section-body">
+        <div className="rey-crown-intro">
+          <span className="rey-crown-icon">👑</span>
+          <h2 className="rey-crown-title">Esta corona es tuya, mi princesa</h2>
+          <p className="rey-crown-text">
+            No la estoy entregando — solo te la estoy recordando.<br />
+            Siempre fue tuya.
+          </p>
+        </div>
+
         <div className="progress-bar-wrap">
           <div className="progress-bar-fill" style={{ width: `${pct}%`, background: '#f59e0b' }} />
         </div>

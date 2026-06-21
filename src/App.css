@@ -1,13 +1,17 @@
 /* ════════════════════════════════
    BASE
    ════════════════════════════════ */
+html, body {
+  color-scheme: only light;
+}
+
 .app {
   min-height: 100svh;
   background: #080b18;
   color: #e2e8f0;
   font-family: 'Segoe UI', system-ui, sans-serif;
   position: relative;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* ════════════════════════════════
@@ -187,31 +191,140 @@
 .hub-status {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
-  background: #0f172a;
-  border-bottom: 1px solid #1e293b;
+  gap: 12px;
+  margin: 12px 16px 0;
+  padding: 10px 16px;
+  background: #111827;
+  border: 1px solid #1e293b;
+  border-radius: 20px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.55);
   font-size: 13px;
   color: #64748b;
   position: sticky;
-  top: 0;
-  z-index: 10;
+  top: 12px;
+  z-index: 50;
 }
 .hub-back-btn {
-  background: none;
-  border: none;
-  color: #475569;
+  display: inline-flex;
+  align-items: center;
+  background: #1e293b;
+  border: 1px solid #334155;
+  color: #94a3b8;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  padding: 0 10px 0 0;
-  letter-spacing: 0.2px;
-  transition: color 0.2s;
+  padding: 6px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.3px;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
   flex-shrink: 0;
   white-space: nowrap;
 }
-.hub-back-btn:hover { color: #94a3b8; }
-.hub-status-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hub-back-btn:hover {
+  background: #334155;
+  color: #e2e8f0;
+  border-color: #475569;
+}
+/* ── Skin selector ── */
+.hub-skin-selector {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.hub-skin-arrow {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #e2e8f0;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s, border-color 0.15s;
+}
+.hub-skin-arrow:hover {
+  background: rgba(255,255,255,0.15);
+  border-color: rgba(255,255,255,0.25);
+}
+.hub-skin-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 12px;
+  transition: background 0.15s;
+}
+.hub-skin-btn:hover {
+  background: rgba(255,255,255,0.06);
+}
+.hub-avatar-wrap {
+  position: relative;
+  width: 54px;
+  height: 54px;
+  flex-shrink: 0;
+}
+.hub-avatar-edit {
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  width: 17px;
+  height: 17px;
+  background: #1d4ed8;
+  border: 2px solid #111827;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  pointer-events: none;
+}
+.hub-skin-img {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+  transition: transform 0.2s cubic-bezier(.22,.61,.36,1);
+}
+.hub-skin-btn:hover .hub-skin-img { transform: scale(1.08); }
+.hub-skin-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 72px;
+}
+.hub-skin-label {
+  font-family: 'Nunito', sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.35);
+  text-transform: uppercase;
+}
+.hub-skin-name {
+  font-family: 'Lilita One', sans-serif;
+  font-size: 15px;
+  color: #fff;
+  letter-spacing: 0.3px;
+  line-height: 1.1;
+}
+/* ── Right side (status dot) ── */
+.hub-status-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.hub-status-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; }
 .status-dot {
   width: 8px; height: 8px;
   background: #22c55e;
@@ -237,6 +350,7 @@
   justify-content: center;
   padding: 8px 0;
   width: 100%;
+  position: relative;
 }
 
 /* ── Panel — réplica fiel al juego ── */
@@ -296,7 +410,7 @@
 
 /* ── Calendario con fuego ── */
 .streak-cal-outer {
-  transform: translateX(20%);
+  transform: translateX(-195%);
 }
 .streak-cal-wrap {
   position: relative;
@@ -399,7 +513,7 @@
   text-align: center;
   gap: 4px;
   padding: 0 8px;
-  transform: translateX(25%) scale(1.40);
+  transform: translateX(-130%) scale(1.40);
 }
 .streak-info-label {
   font-family: 'Nunito', sans-serif;
@@ -436,6 +550,29 @@
   color: rgba(255,255,255,0.6);
   margin: 4px 0 0;
   letter-spacing: 0.3px;
+}
+
+/* ── Liga badge en streak-info ── */
+.streak-league-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+.streak-league-badge-img {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 8px rgba(0,0,0,0.55));
+}
+.streak-league-badge-name {
+  font-family: 'Lilita One', sans-serif;
+  font-size: 15px;
+  color: #ffe234;
+  -webkit-text-stroke: 0.5px #1a0840;
+  paint-order: stroke fill;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  letter-spacing: 0.5px;
 }
 
 /* ── Galleta de la fortuna — tercera columna ── */
@@ -492,7 +629,7 @@
   justify-content: center;
   padding: 0;
   min-width: 0;
-  transform: translateX(-10%) translateY(100%) rotate(-20deg);
+  transform: translateX(0%) translateY(250%) rotate(5deg);
 }
 .streak-coin {
   width: 46px;
@@ -626,15 +763,27 @@
   gap: 14px;
   background: #0f172a;
   border: 1px solid #1e293b;
+  border-left: 3px solid var(--card-color);
   border-radius: 14px;
   padding: 16px 18px;
   cursor: pointer;
   text-align: left;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
   color: #e2e8f0;
 }
-.hub-extra-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.35); }
+.hub-extra-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+  border-color: var(--card-color);
+}
 .hub-extra-icon { font-size: 28px; flex-shrink: 0; }
+.hub-extra-skin {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+}
 .hub-extra-btn strong { display: block; font-size: 15px; font-weight: 700; color: #f1f5f9; margin-bottom: 2px; }
 .hub-extra-btn p { font-size: 12px; color: #64748b; margin: 0; }
 
@@ -644,29 +793,58 @@
 .section-page { min-height: 100svh; }
 
 .section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: calc(100% - 72px);
+  max-width: 788px;
+  margin: 12px auto 0;
+  padding: 10px 16px;
+  background: #111827;
+  border: 1px solid #1e293b;
+  border-left: 3px solid var(--col);
+  border-radius: 20px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.55);
+  font-size: 13px;
+  color: #64748b;
   position: sticky;
-  top: 0;
-  z-index: 10;
-  background: #080b18;
-  border-bottom: 1px solid #1e293b;
-  padding: 16px 24px 20px;
-  border-top: 3px solid var(--col);
+  top: 12px;
+  z-index: 50;
+}
+.section-header::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: var(--col);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--col);
+  flex-shrink: 0;
 }
 .back-btn {
-  background: none;
-  border: none;
-  color: #64748b;
-  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  background: #1e293b;
+  border: 1px solid #334155;
+  color: #94a3b8;
+  font-size: 13px;
+  font-weight: 700;
   cursor: pointer;
-  padding: 0;
-  margin-bottom: 12px;
-  transition: color 0.2s;
-  display: block;
+  padding: 6px 14px;
+  border-radius: 20px;
+  letter-spacing: 0.3px;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
-.back-btn:hover { color: #f1f5f9; }
-.section-header-inner { display: flex; align-items: center; gap: 18px; }
+.back-btn:hover {
+  background: #334155;
+  color: #e2e8f0;
+  border-color: #475569;
+}
+.section-header-inner { flex: 1; display: flex; align-items: center; gap: 12px; min-width: 0; }
 .section-mrp {
-  width: 72px; height: auto;
+  width: 54px; height: 54px;
+  object-fit: contain;
   flex-shrink: 0;
   animation: float 3.5s ease-in-out infinite;
 }
@@ -678,16 +856,16 @@
   color: #fff;
   padding: 3px 12px;
   border-radius: 20px;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 .section-title {
-  font-size: clamp(22px, 5vw, 32px);
+  font-size: clamp(14px, 3.5vw, 18px);
   font-weight: 900;
   color: #f1f5f9;
-  margin: 0 0 4px;
-  letter-spacing: -0.5px;
+  margin: 0 0 2px;
+  letter-spacing: -0.3px;
 }
-.section-subtitle { font-size: 14px; color: #64748b; margin: 0; }
+.section-subtitle { display: none; }
 
 .section-body { max-width: 720px; margin: 0 auto; padding: 32px 24px 80px; }
 
@@ -708,6 +886,63 @@
 /* ════════════════════════════════
    CLÁSICO
    ════════════════════════════════ */
+.scratch-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.scratch-session-hint {
+  font-size: 11px;
+  color: #475569;
+  margin: 0;
+  letter-spacing: 0.3px;
+}
+.scratch-reset-btn {
+  background: none;
+  border: 1px solid #334155;
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: border-color 0.2s, color 0.2s;
+}
+.scratch-reset-btn:hover { border-color: #f43f5e; color: #f43f5e; }
+
+/* ── Scratch cards ── */
+.scratch-wrap {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+.scratch-content { display: block; }
+.scratch-content .message-card { margin-bottom: 0; }
+.scratch-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  touch-action: none;
+  transition: opacity 0.65s ease;
+}
+.scratch-canvas--fade { opacity: 0; pointer-events: none; }
+.scratch-done {
+  position: absolute;
+  top: 9px;
+  right: 14px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #22c55e;
+}
+
 .message-card {
   background: #0f172a;
   border: 1px solid #1e293b;
@@ -774,6 +1009,32 @@
 /* ════════════════════════════════
    REY
    ════════════════════════════════ */
+.rey-crown-intro {
+  text-align: center;
+  padding: 36px 0 28px;
+}
+.rey-crown-icon {
+  font-size: 68px;
+  line-height: 1;
+  display: block;
+  margin-bottom: 16px;
+  filter: drop-shadow(0 0 24px rgba(245,158,11,0.7));
+  animation: float 3.2s ease-in-out infinite;
+}
+.rey-crown-title {
+  font-family: 'Lilita One', sans-serif;
+  font-size: clamp(20px, 5vw, 26px);
+  color: #f59e0b;
+  margin: 0 0 12px;
+  letter-spacing: 0.3px;
+}
+.rey-crown-text {
+  font-size: 15px;
+  color: #94a3b8;
+  line-height: 1.75;
+  margin: 0;
+}
+
 .rey-unlock-area { text-align: center; margin-bottom: 32px; }
 .rey-unlock-btn {
   display: inline-flex;
@@ -874,6 +1135,92 @@
 .audio-icon { font-size: 28px; flex-shrink: 0; }
 .audio-card strong { display: block; font-size: 14px; color: #93c5fd; margin-bottom: 3px; }
 .audio-card p { font-size: 12px; color: #475569; margin: 0; }
+
+/* ── Song Player ── */
+.song-player {
+  background: linear-gradient(135deg, #1a0527 0%, #2d0a4a 100%);
+  border: 1px solid rgba(192, 132, 252, 0.3);
+  border-radius: 16px;
+  padding: 18px 20px 14px;
+  box-shadow: 0 4px 24px rgba(168, 85, 247, 0.15);
+  margin-bottom: 0;
+}
+.song-player-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  gap: 12px;
+}
+.song-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.song-title {
+  font-family: 'Lilita One', sans-serif;
+  font-size: 17px;
+  color: #f0d9ff;
+  letter-spacing: 0.3px;
+}
+.song-artist {
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px;
+  color: rgba(192, 132, 252, 0.7);
+  font-weight: 600;
+}
+.song-play-btn {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, #c084fc, #7c3aed);
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.5);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.song-play-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.7);
+}
+.song-bar-wrap {
+  cursor: pointer;
+  padding: 6px 0;
+}
+.song-bar-bg {
+  height: 4px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.song-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #c084fc, #e879f9);
+  border-radius: 99px;
+  transition: width 0.2s linear;
+}
+.song-dedication {
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px;
+  font-style: italic;
+  color: rgba(192, 132, 252, 0.6);
+  text-align: center;
+  margin: 6px 0 0;
+}
+.song-times {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Nunito', sans-serif;
+  font-size: 11px;
+  color: rgba(192, 132, 252, 0.55);
+  margin-top: 4px;
+}
 
 .nevado-sign {
   text-align: center;
@@ -1002,6 +1349,17 @@
 }
 .carino-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 10px 30px rgba(190,24,93,0.55); }
 .float-label { font-size: 13px; }
+.mute-btn {
+  background: rgba(15, 23, 42, 0.85);
+  color: #fff;
+  padding: 12px 16px;
+  font-size: 18px;
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.mute-btn:hover { transform: translateY(-3px) scale(1.08); }
 
 /* Secret trigger */
 .secret-trigger {
@@ -1063,7 +1421,13 @@
 .modal-mrp { width: 100px; height: auto; animation: float 3.5s ease-in-out infinite; margin-bottom: 6px; }
 
 /* Cariño modal */
-.carino-card { border-top: 3px solid #be185d; }
+.carino-card {
+  border-top: 3px solid #be185d;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 460px;
+}
 .carino-emoji { font-size: 36px; display: block; margin-bottom: 10px; }
 .carino-text {
   font-size: 18px;
@@ -1071,6 +1435,11 @@
   color: #f1f5f9;
   line-height: 1.65;
   margin: 0 0 10px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 .carino-from { font-size: 14px; color: #60a5fa; margin: 0 0 20px; }
 .carino-next-btn {
@@ -1151,8 +1520,9 @@
    MILESTONE BAR (XP style)
    ════════════════════════════════ */
 .milestone-wrap {
-  width: 100%;
-  margin: 4px 0 10px;
+  width: 45%;
+  margin: 4px 0 10px 55%;
+  align-self: flex-end;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -1162,9 +1532,25 @@
   justify-content: space-between;
   align-items: center;
 }
+.milestone-league-icon {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+}
+.milestone-current {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.milestone-next {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
 .milestone-label {
   font-family: 'Nunito', sans-serif;
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 800;
   letter-spacing: 2px;
   color: rgba(255,255,255,0.7);
@@ -1172,7 +1558,7 @@
 }
 .milestone-target {
   font-family: 'Lilita One', sans-serif;
-  font-size: 13px;
+  font-size: 16px;
   color: #ffe234;
   -webkit-text-stroke: 0.5px #1a0840;
   paint-order: stroke fill;
@@ -1219,7 +1605,7 @@
 }
 .milestone-remaining {
   font-family: 'Nunito', sans-serif;
-  font-size: 11px;
+  font-size: 13px;
   color: rgba(255,255,255,0.6);
   margin: 0;
   text-align: right;
@@ -1227,6 +1613,404 @@
 .milestone-remaining strong {
   color: #ffe234;
   font-weight: 800;
+}
+
+/* milestone-wrap como botón */
+.milestone-wrap {
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  padding: 0;
+  text-align: left;
+  transition: opacity 0.15s;
+}
+.milestone-wrap:hover { opacity: 0.85; }
+.milestone-see-all {
+  font-family: 'Nunito', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+/* ── Página de ligas ── */
+.lp-wrap {
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 20px 16px 40px;
+}
+.lp-card {
+  width: 100%;
+  max-width: 480px;
+  background: linear-gradient(160deg, #1a0840 0%, #0d1f44 100%);
+  border: 2px solid rgba(255,255,255,0.12);
+  border-radius: 24px;
+  padding: 16px 20px 32px;
+  position: relative;
+}
+.lp-back {
+  margin-bottom: 20px;
+  display: inline-block;
+}
+.lp-title {
+  font-family: 'Lilita One', sans-serif;
+  font-size: 28px;
+  color: #ffe234;
+  -webkit-text-stroke: 0.5px #1a0840;
+  paint-order: stroke fill;
+  margin: 0 0 4px;
+  text-align: center;
+}
+.lp-subtitle {
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  color: rgba(255,255,255,0.65);
+  text-align: center;
+  margin: 0 0 28px;
+}
+.lp-subtitle strong {
+  color: #fff;
+}
+.lp-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+}
+.lp-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 12px;
+  border-radius: 16px;
+  position: relative;
+  transition: background 0.2s;
+}
+.lp-item--completed {
+  opacity: 0.65;
+}
+.lp-item--current {
+  background: rgba(255,226,52,0.12);
+  border: 1.5px solid rgba(255,226,52,0.35);
+  box-shadow: 0 0 20px rgba(255,180,0,0.18);
+}
+.lp-item--locked {
+  opacity: 0.35;
+  filter: grayscale(0.5);
+}
+/* vertical connector between items */
+.lp-connector {
+  position: absolute;
+  left: 35px;
+  bottom: -20px;
+  width: 2px;
+  height: 20px;
+  background: rgba(255,255,255,0.15);
+  z-index: 0;
+}
+.lp-icon {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: drop-shadow(0 3px 8px rgba(0,0,0,0.5));
+  position: relative;
+  z-index: 1;
+}
+.lp-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.lp-name {
+  font-family: 'Lilita One', sans-serif;
+  font-size: 18px;
+  color: #fff;
+  letter-spacing: 0.3px;
+}
+.lp-days {
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px;
+  color: rgba(255,255,255,0.55);
+  font-weight: 600;
+}
+.lp-progress {
+  font-family: 'Nunito', sans-serif;
+  font-size: 11px;
+  color: #ffe234;
+  font-weight: 700;
+  margin-top: 2px;
+}
+.lp-badge {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 52px;
+}
+.lp-badge--done {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #22c55e;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lp-badge--here {
+  font-family: 'Lilita One', sans-serif;
+  font-size: 13px;
+  color: #ffe234;
+  text-shadow: 0 0 8px rgba(255,180,0,0.6);
+  white-space: nowrap;
+}
+.lp-badge--lock {
+  font-size: 18px;
+}
+
+/* ── Botón tiempo completo ── */
+.streak-timecount-btn {
+  position: absolute;
+  right: 15%;
+  top: 45%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: linear-gradient(180deg,
+    #54e8ff 0%,
+    #00c8f0 30%,
+    #0099dd 60%,
+    #005fa3 85%,
+    #003d7a 100%
+  );
+  border: 3px solid #00eeff;
+  outline: 2px solid rgba(180,245,255,0.55);
+  outline-offset: 2px;
+  border-radius: 16px;
+  padding: 36px 10px;
+  cursor: pointer;
+  width: 152px;
+  z-index: 5;
+  box-shadow:
+    0 0 0 1px rgba(0,220,255,0.25),
+    0 0 22px rgba(0,200,255,0.7),
+    0 0 50px rgba(0,150,255,0.3),
+    inset 0 2px 0 rgba(255,255,255,0.35),
+    0 8px 20px rgba(0,0,0,0.55);
+  transition: box-shadow 0.2s, transform 0.2s;
+  overflow: hidden;
+}
+.streak-timecount-btn::before {
+  content: '';
+  position: absolute;
+  top: 5px; left: 8px; right: 8px;
+  height: 28%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0) 100%);
+  border-radius: 8px;
+  pointer-events: none;
+}
+.streak-timecount-btn::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 22%;
+  background: rgba(0,20,60,0.45);
+  border-radius: 0 0 13px 13px;
+  pointer-events: none;
+}
+.streak-timecount-btn:hover {
+  transform: translateY(-52%) scale(1.06);
+  box-shadow:
+    0 0 0 1px rgba(0,220,255,0.4),
+    0 0 32px rgba(0,200,255,0.9),
+    0 0 60px rgba(0,150,255,0.5),
+    inset 0 2px 0 rgba(255,255,255,0.4),
+    0 10px 24px rgba(0,0,0,0.6);
+}
+.streak-timecount-icon {
+  width: 88px;
+  height: 88px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
+}
+.streak-timecount-text {
+  font-family: 'Nunito', sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  color: #fff;
+  text-align: center;
+  line-height: 1.3;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+/* ════════════════════════════════
+   TIME COUNT PAGE
+   ════════════════════════════════ */
+.tc-wrap {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.tc-card {
+  background: linear-gradient(135deg, #0f172a 0%, #1e1040 100%);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 28px;
+  padding: 36px 32px;
+  max-width: 480px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+  position: relative;
+}
+.tc-back {
+  align-self: flex-start;
+  margin-bottom: -8px;
+}
+.tc-badge {
+  font-family: 'Nunito', sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 0;
+}
+.tc-title {
+  font-family: 'Lilita One', sans-serif;
+  font-size: clamp(28px, 7vw, 40px);
+  color: #fff;
+  margin: 0;
+  text-align: center;
+}
+.tc-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 20px;
+  padding: 20px 28px;
+  width: 100%;
+  justify-content: center;
+}
+.tc-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.tc-value {
+  font-family: 'Lilita One', sans-serif;
+  font-size: clamp(40px, 10vw, 64px);
+  color: #fff;
+  line-height: 1;
+  background: linear-gradient(180deg, #ff8500, #ff3fa0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.tc-label {
+  font-family: 'Nunito', sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.tc-sep {
+  font-size: 36px;
+  color: rgba(255,255,255,0.2);
+  margin-bottom: 16px;
+  font-family: 'Lilita One', sans-serif;
+}
+.tc-clock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.tc-clock-val {
+  font-family: 'Nunito', sans-serif;
+  font-size: clamp(20px, 5vw, 28px);
+  font-weight: 800;
+  color: rgba(255,255,255,0.7);
+  letter-spacing: 2px;
+}
+.tc-colon {
+  opacity: 0.5;
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+.tc-clock-label {
+  font-family: 'Nunito', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.tc-total {
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.6);
+  margin: 0;
+}
+
+/* ── Reveal steps ── */
+.tc-reveal-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  min-height: 220px;
+  justify-content: center;
+}
+.tc-reveal-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  opacity: 0;
+  transform: scale(0.6) translateY(20px);
+  transition: opacity 0.5s cubic-bezier(.22,.61,.36,1), transform 0.5s cubic-bezier(.22,.61,.36,1);
+  pointer-events: none;
+}
+.tc-reveal-item--visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+.tc-hint {
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.4);
+  margin: 0;
+  letter-spacing: 1px;
+  animation: pulse-hint 1.8s ease-in-out infinite;
+}
+.tc-hint--done {
+  color: rgba(255,255,255,0.65);
+  animation: none;
+}
+@keyframes pulse-hint {
+  0%, 100% { opacity: 0.4; }
+  50%       { opacity: 0.9; }
 }
 
 /* ════════════════════════════════
@@ -1378,10 +2162,11 @@
 
   /* Sections */
   .section-body    { padding: 24px 16px 80px; }
-  .section-header  { padding: 12px 16px 16px; }
-  .section-header-inner { gap: 10px; }
-  .section-mrp     { width: 52px; }
-  .section-title   { font-size: clamp(18px, 5vw, 26px); }
+  .section-header  { margin: 8px auto 0; padding: 8px 12px; top: 8px; }
+  .section-header-inner { gap: 8px; }
+  .section-mrp     { width: 44px; height: 44px; }
+  .section-title   { font-size: clamp(13px, 3.5vw, 16px); }
+  .back-btn        { padding: 5px 10px; font-size: 12px; }
 
   /* House */
   .house-grid      { grid-template-columns: repeat(2, 1fr); }
@@ -1435,7 +2220,7 @@
 }
 
 .viewer3d-title {
-  font-size: clamp(18px, 5vw, 28px);
+  font-size: clamp(22px, 6vw, 34px);
   font-weight: 900;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -1473,6 +2258,7 @@
 }
 
 .viewer3d-skin-btn {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1516,6 +2302,45 @@
   text-transform: uppercase;
   letter-spacing: 2px;
 }
+.viewer3d-choose-row {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0 4px;
+}
+.viewer3d-choose-btn {
+  background: linear-gradient(135deg, rgba(var(--gc-rgb, 96,165,250), 0.15), rgba(var(--gc-rgb, 96,165,250), 0.05));
+  border: 1px solid var(--gc);
+  color: var(--gc);
+  font-size: 14px;
+  font-weight: 700;
+  padding: 9px 28px;
+  border-radius: 50px;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+}
+.viewer3d-choose-btn:hover {
+  background: linear-gradient(135deg, rgba(96,165,250,0.25), rgba(96,165,250,0.1));
+  box-shadow: 0 0 18px rgba(96,165,250,0.3);
+  transform: translateY(-2px);
+}
+.viewer3d-chosen-badge {
+  font-size: 13px;
+  font-weight: 700;
+  color: #22c55e;
+  letter-spacing: 0.3px;
+}
+.viewer3d-profile-dot {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 7px;
+  height: 7px;
+  background: #22c55e;
+  border-radius: 50%;
+  border: 1px solid #0f172a;
+}
+
 .viewer3d-credit {
   text-align: center;
   font-size: 12px;

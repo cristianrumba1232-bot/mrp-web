@@ -1,14 +1,17 @@
-import { useState, useCallback, useEffect, lazy, Suspense } from 'react'
+import { useState, useCallback, useEffect, useRef, lazy, Suspense } from 'react'
 import mrpImg    from './assets/mrp_skin1.png'
 import mrpSecret from './assets/mrp_skin3.png'
 import { CARIÑO_PHRASES } from './data/content'
+import bgMusic  from './assets/bg_music.mp3'
 import Landing  from './components/Landing'
 import Hub      from './components/Hub'
 import Clasico  from './components/Clasico'
 import Agente   from './components/Agente'
 import Rey      from './components/Rey'
 import Nevado   from './components/Nevado'
-import Timeline from './components/Timeline'
+import Timeline  from './components/Timeline'
+import TimeCount  from './components/TimeCount'
+import LeaguePage from './components/LeaguePage'
 import House    from './components/House'
 import './App.css'
 
@@ -111,21 +114,94 @@ function SecretModal({ onClose }) {
 const VIEWS = {
   landing: Landing, hub: Hub, clasico: Clasico, agente: Agente,
   rey: Rey, nevado: Nevado, timeline: Timeline, house: House, viewer: Viewer3D,
+  timecount: TimeCount,
+  leagues:   LeaguePage,
 }
 
 export default function App() {
-  const [view,        setView]        = useState('landing')
-  const [activated,   setActivated]   = useState(false)
+  const alreadyIn = localStorage.getItem('mrp_activated') === 'true'
+  const [view,        setView]        = useState(alreadyIn ? 'hub' : 'landing')
+  const [activated,   setActivated]   = useState(alreadyIn)
   const [showCarino,  setShowCarino]  = useState(false)
   const [showSecret,  setShowSecret]  = useState(false)
+  const [muted,       setMuted]       = useState(false)
+  const [skinIdx,     setSkinIdx]     = useState(0)
+  const audioRef    = useRef(null)
+  const inactiveRef = useRef(null)
+
+  const logout = useCallback(() => {
+    localStorage.removeItem('mrp_activated')
+    sessionStorage.removeItem('mrp_scratched')
+    setActivated(false)
+    setView('landing')
+    setShowCarino(false)
+    setShowSecret(false)
+    audioRef.current?.pause()
+    window.history.replaceState({ view: 'landing' }, '')
+  }, [])
+
+  /* ── Inactivity timer: 30 min ── */
+  useEffect(() => {
+    const TIMEOUT = 30 * 60 * 1000
+
+    const reset = () => {
+      clearTimeout(inactiveRef.current)
+      if (localStorage.getItem('mrp_activated') === 'true') {
+        inactiveRef.current = setTimeout(logout, TIMEOUT)
+      }
+    }
+
+    const events = ['mousemove', 'mousedown', 'keydown', 'touchstart', 'scroll', 'click']
+    events.forEach(e => window.addEventListener(e, reset, { passive: true }))
+    reset()
+
+    return () => {
+      clearTimeout(inactiveRef.current)
+      events.forEach(e => window.removeEventListener(e, reset))
+    }
+  }, [logout])
+
+  useEffect(() => {
+    const audio = new Audio(bgMusic)
+    audio.loop = true
+    audio.volume = 0.05
+    audioRef.current = audio
+    if (alreadyIn) {
+      audio.play().catch(() => {
+        const resume = () => {
+          audio.play().catch(() => {})
+          window.removeEventListener('click',      resume)
+          window.removeEventListener('touchstart', resume)
+          window.removeEventListener('keydown',    resume)
+        }
+        window.addEventListener('click',      resume)
+        window.addEventListener('touchstart', resume)
+        window.addEventListener('keydown',    resume)
+      })
+    }
+
+    const onSongPlay  = () => audio.pause()
+    const onSongPause = () => {
+      if (!audio.paused) return
+      if (localStorage.getItem('mrp_activated') === 'true') audio.play().catch(() => {})
+    }
+    window.addEventListener('mrp:song:play',  onSongPlay)
+    window.addEventListener('mrp:song:pause', onSongPause)
+
+    return () => {
+      audio.pause(); audio.src = ''
+      window.removeEventListener('mrp:song:play',  onSongPlay)
+      window.removeEventListener('mrp:song:pause', onSongPause)
+    }
+  }, [])
 
   /* ── Sync browser history with SPA view ── */
   useEffect(() => {
-    window.history.replaceState({ view: 'landing' }, '')
+    window.history.replaceState({ view: alreadyIn ? 'hub' : 'landing' }, '')
 
     const onPop = (e) => {
       const v = e.state?.view ?? 'landing'
-      if (v === 'landing') setActivated(false)
+      if (v === 'landing') { setActivated(false); localStorage.removeItem('mrp_activated') }
       setView(v)
     }
     window.addEventListener('popstate', onPop)
@@ -133,15 +209,18 @@ export default function App() {
   }, [])
 
   const navigateTo = useCallback((to) => {
-    if (to === 'landing') setActivated(false)
+    if (to === 'landing') { setActivated(false); localStorage.removeItem('mrp_activated') }
     setView(to)
     window.history.pushState({ view: to }, '')
   }, [])
 
   const activate = useCallback(() => {
+    localStorage.setItem('mrp_activated', 'true')
     setActivated(true)
     setView('hub')
     window.history.pushState({ view: 'hub' }, '')
+    audioRef.current?.play().catch(() => {})
+    setMuted(false)
   }, [])
 
   const CurrentView = VIEWS[view] ?? Hub
@@ -154,7 +233,11 @@ export default function App() {
         <Suspense fallback={<div className="viewer-loading">Cargando 3D…</div>}>
           {view === 'landing'
             ? <Landing onActivate={activate} />
-            : <CurrentView navigate={navigateTo} />
+            : <CurrentView
+                navigate={navigateTo}
+                skinIdx={skinIdx}
+                setSkinIdx={setSkinIdx}
+              />
           }
         </Suspense>
       </div>
@@ -168,6 +251,18 @@ export default function App() {
             title="Necesito cariño"
           >
             🫂<span className="float-label">Necesito cariño</span>
+          </button>
+          <button
+            className="float-btn mute-btn"
+            onClick={() => {
+              const audio = audioRef.current
+              if (!audio) return
+              if (muted) { audio.play().catch(() => {}); setMuted(false) }
+              else        { audio.pause(); setMuted(true) }
+            }}
+            title={muted ? 'Activar música' : 'Silenciar música'}
+          >
+            {muted ? '🔇' : '🔊'}
           </button>
         </div>
       )}
