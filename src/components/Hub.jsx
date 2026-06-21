@@ -142,6 +142,7 @@ function StreakCounter({ days, navigate }) {
 
       <button className="streak-timecount-btn" onClick={() => navigate('timecount')}>
         <img src={starrDrop} alt="Starr Drop" className="streak-timecount-icon" />
+        <span className="streak-timecount-text">Descubrir<br />tiempo juntos</span>
       </button>
 
     </div>

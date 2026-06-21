@@ -1878,13 +1878,15 @@ html, body {
   filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
 }
 .streak-timecount-text {
+  display: none;
   font-family: 'Nunito', sans-serif;
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 800;
   color: #fff;
-  text-align: center;
-  line-height: 1.3;
+  text-align: left;
+  line-height: 1.4;
   text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  letter-spacing: 0.3px;
 }
 
 /* ════════════════════════════════
@@ -2177,26 +2179,53 @@ html, body {
   .hub-card-mrp    { width: 44px; height: 44px; }
   .hub-sections-title { font-size: 11px; }
 
-  /* Streak — reset desktop transforms */
-  .streak-wrap     { padding: 4px 0; }
-  .streak-panel    { padding: 14px 14px 12px; border-radius: 18px; }
-  .streak-title    { font-size: clamp(20px, 6vw, 30px); letter-spacing: 1.5px; margin-bottom: 8px; }
-  .streak-main     { gap: 12px; }
-  .streak-scroll-col { display: none; }
-  .streak-cal-outer  { transform: none; }
-  .streak-cal-wrap { flex: none; }
-  .streak-info     { flex: none; transform: none; }
+  /* Streak — layout vertical en móvil */
+  .streak-wrap       { flex-direction: column; align-items: center; padding: 4px 0; gap: 10px; }
+  .streak-panel      { padding: 14px 14px 14px; border-radius: 18px; }
+  .streak-title      { font-size: clamp(20px, 6vw, 30px); letter-spacing: 1.5px; margin-bottom: 10px; }
+  /* Columna principal vertical */
+  .streak-main       { flex-direction: column; align-items: center; gap: 10px; margin-bottom: 10px; }
+  /* 1º — Calendario */
+  .streak-cal-outer  { transform: none; order: 1; }
+  .streak-cal-wrap   { flex: none; padding: 14px 0; }
   .streak-cal-official { width: clamp(100px, 24vw, 125px); }
   .streak-cal-number   { font-size: clamp(30px, 8vw, 44px); }
-  .streak-flame-c  { width: 42px; }
+  .streak-flame-c    { width: 42px; }
   .streak-flame-l, .streak-flame-r { width: 26px; }
-  .streak-info-days    { font-size: clamp(22px, 7vw, 32px); }
-  .streak-info-date    { font-size: 10px; }
-  .streak-fortune      { padding: 10px 12px; gap: 7px; }
-  .streak-fortune-img  { width: 44px; height: 44px; }
-  .streak-fortune-text { font-size: 11px; }
-  /* Milestone bar — center on mobile */
-  .milestone-wrap  { width: 90%; margin: 6px auto 10px; align-self: center; }
+  /* 2º — Contador de días */
+  .streak-info       { flex: none; transform: none; order: 2; text-align: center; width: 100%; }
+  .streak-info-days  { font-size: clamp(22px, 7vw, 32px); }
+  .streak-info-date  { font-size: 10px; text-align: center; }
+  .streak-info-label { text-align: center; }
+  /* 3º — Galleta de la fortuna — visible en móvil */
+  .streak-scroll-col {
+    display: flex;
+    transform: none;
+    order: 3;
+    flex: unset;
+    width: 100%;
+    justify-content: center;
+    padding: 4px 8px;
+  }
+  /* 4º — Botón Star Drop — en flujo normal, horizontal */
+  .streak-timecount-btn {
+    position: relative;
+    right: auto;
+    top: auto;
+    transform: none;
+    width: 100%;
+    flex-direction: row;
+    padding: 14px 20px;
+    border-radius: 16px;
+    gap: 16px;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .streak-timecount-btn:hover { transform: translateY(-2px) scale(1.02); }
+  .streak-timecount-icon  { width: 58px; height: 58px; }
+  .streak-timecount-text  { display: block; }
+  /* 5º — Barra de tiers */
+  .milestone-wrap    { width: 90%; margin: 6px auto 10px; align-self: center; }
   /* Hub navbar */
   .hub-back-btn    { font-size: 11px; padding: 5px 10px; letter-spacing: 0; }
   .hub-avatar-wrap { width: 42px; height: 42px; }
@@ -2242,14 +2271,12 @@ html, body {
   .landing-badge   { font-size: 9px; letter-spacing: 2px; }
   .house-grid      { grid-template-columns: 1fr 1fr; }
 
-  /* Streak goes vertical on very small phones */
-  .streak-main      { flex-direction: column; align-items: center; }
-  .streak-info      { transform: none; padding: 10px 0; width: 100%; text-align: center; }
-  .streak-cal-outer { transform: none; width: 100%; display: flex; justify-content: center; }
-  .streak-info-date { text-align: center; }
-  .streak-info-label { text-align: center; }
+  /* Streak — ajustes extra en pantallas muy pequeñas */
   .streak-cal-official { width: clamp(110px, 40vw, 140px); }
   .streak-cal-number   { font-size: clamp(34px, 10vw, 52px); }
+  .streak-timecount-btn { padding: 12px 14px; gap: 12px; }
+  .streak-timecount-icon { width: 48px; height: 48px; }
+  .streak-timecount-text { font-size: 12px; }
 
   /* Hub */
   .hub-card-label  { font-size: 13px; }

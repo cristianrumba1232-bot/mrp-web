@@ -174,10 +174,12 @@ export default function App() {
     if (alreadyIn) {
       audio.play().catch(() => {
         const resume = () => {
-          audio.play().catch(() => {})
           window.removeEventListener('click',      resume)
           window.removeEventListener('touchstart', resume)
           window.removeEventListener('keydown',    resume)
+          if (localStorage.getItem('mrp_activated') === 'true') {
+            audio.play().catch(() => {})
+          }
         }
         window.addEventListener('click',      resume)
         window.addEventListener('touchstart', resume)
