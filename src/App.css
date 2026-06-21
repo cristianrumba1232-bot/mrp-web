@@ -13,6 +13,16 @@ html, body {
 @media (prefers-color-scheme: dark) {
   html, body { background-color: #080b18 !important; color: #e2e8f0 !important; }
   input, textarea, select, button { color-scheme: only light; }
+  /* Samsung Internet dark mode — prevent recoloring the calendar overlay and flame */
+  .streak-cal-official::after {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+  }
+  .streak-flame {
+    filter: drop-shadow(0 0 6px #ff8800) drop-shadow(0 0 16px #ffcc00) !important;
+    color-scheme: only light;
+  }
+  .streak-cal-number { color: #111827 !important; }
 }
 
 /* Prevent Windows High Contrast / forced-color modes from recoloring the UI */
@@ -457,6 +467,7 @@ html, body {
 .streak-flame {
   display: block;
   animation: flame-glow 0.6s ease-in-out infinite alternate;
+  color-scheme: only light;
 }
 .streak-flame-l { width: 32px; align-self: flex-end; animation-delay: -0.3s; }
 .streak-flame-c { width: 208px; animation-delay: 0s; }
@@ -487,6 +498,8 @@ html, body {
   left: 33%;
   right: 29%;
   background: #ffffff;
+  background-color: #ffffff;
+  color-scheme: only light;
   border-radius: 2px;
   z-index: 1;
 }
@@ -1568,6 +1581,387 @@ html, body {
 .secret-message p:last-child { margin: 0; }
 .secret-sign { font-size: 13px; color: #60a5fa; margin: 0; font-style: italic; }
 
+/* ── Paso 1 → 2: botón "Ver los desafíos" ── */
+.sc-enter-btn {
+  margin-top: 18px;
+  width: 100%;
+  padding: 13px 20px;
+  background: linear-gradient(135deg, #4c1d95, #1e1b4b);
+  border: 1px solid #7c3aed;
+  border-radius: 14px;
+  color: #c4b5fd;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s, border-color 0.2s;
+}
+.sc-enter-btn:hover { background: linear-gradient(135deg, #5b21b6, #2e1a6e); border-color: #a78bfa; transform: translateY(-2px); }
+
+/* ── Loading screen ── */
+.sc-loading-card {
+  max-width: 340px;
+  border: 1px solid #7c3aed;
+  background: #07040f;
+  border-top: 3px solid #7c3aed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 48px 32px 40px;
+  text-align: center;
+}
+.sc-loading-lock {
+  font-size: 48px;
+  animation: sc-lock-pulse 1.2s ease-in-out infinite;
+}
+@keyframes sc-lock-pulse {
+  0%,100% { transform: scale(1);    filter: drop-shadow(0 0 6px rgba(124,58,237,0.4)); }
+  50%     { transform: scale(1.12); filter: drop-shadow(0 0 18px rgba(124,58,237,0.8)); }
+}
+.sc-loading-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #c4b5fd;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+.sc-loading-dots {
+  font-size: 20px;
+  color: #7c3aed;
+  margin: 0;
+  height: 24px;
+}
+.sc-loading-dots span { animation: sc-dot-blink 1.2s ease-in-out infinite; }
+.sc-loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+.sc-loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes sc-dot-blink {
+  0%,80%,100% { opacity: 0.2; }
+  40%         { opacity: 1; }
+}
+.sc-loading-bar-bg {
+  width: 100%;
+  height: 6px;
+  background: #1e0a3c;
+  border-radius: 99px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+.sc-loading-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #7c3aed, #a78bfa, #60a5fa);
+  border-radius: 99px;
+  transition: width 0.12s linear;
+}
+.sc-loading-pct {
+  font-size: 13px;
+  font-weight: 700;
+  color: #64748b;
+  margin: 0;
+}
+
+/* ════════════════════════════════
+   SECRET LEVEL — página completa
+   ════════════════════════════════ */
+.sl-loading-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sl-loading-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 40px 32px;
+  text-align: center;
+}
+.sl-bar-bg {
+  width: min(280px, 72vw);
+  height: 7px;
+  background: #1e0a3c;
+  border-radius: 99px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+.sl-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #7c3aed, #a78bfa, #60a5fa);
+  border-radius: 99px;
+  transition: width 0.12s linear;
+}
+.sl-body {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 20px 20px 80px;
+}
+.sl-list { max-width: 100%; }
+.sl-final-btn { width: 100%; margin: 12px 0 0; }
+.sl-prizes-intro {
+  background: #0f0a1e;
+  border: 1px solid #2e1065;
+  border-radius: 16px;
+  padding: 18px 20px;
+  margin-bottom: 16px;
+}
+.sl-prizes-grid { max-width: 100%; margin: 0; padding: 0; }
+.sl-confirm { margin: 16px 0 0; }
+
+/* ════════════════════════════════
+   PASO 2 — RETOS
+   ════════════════════════════════ */
+.sc-card {
+  max-width: 480px;
+  max-height: 92svh;
+  overflow-y: auto;
+  border: 1px solid #7c3aed;
+  background: #07040f;
+  border-top: 3px solid #7c3aed;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+.sc-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px 10px;
+  position: sticky;
+  top: 0;
+  background: #07040f;
+  z-index: 2;
+  border-bottom: 1px solid #1e0a3c;
+}
+.sc-back-btn {
+  display: inline-flex;
+  align-items: center;
+  background: none;
+  border: 1px solid #334155;
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.sc-back-btn:hover { background: #1e293b; color: #e2e8f0; }
+.sc-close { position: static !important; }
+
+.sc-head {
+  text-align: center;
+  padding: 20px 22px 0;
+}
+.sc-label {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: #f43f5e;
+  text-transform: uppercase;
+}
+.sc-title { font-size: 22px; font-weight: 900; color: #e2e8f0; margin: 8px 0 6px; }
+.sc-subtitle { font-size: 13px; color: #64748b; line-height: 1.5; margin: 0; }
+
+.sc-progress-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 22px 10px;
+}
+.sc-bar-bg {
+  flex: 1;
+  height: 6px;
+  background: #1e0a3c;
+  border-radius: 99px;
+  overflow: hidden;
+}
+.sc-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #7c3aed, #60a5fa);
+  border-radius: 99px;
+  transition: width 0.5s ease;
+}
+.sc-bar-text { font-size: 12px; font-weight: 700; color: #94a3b8; white-space: nowrap; }
+
+.sc-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 6px 14px 14px;
+}
+.sc-item {
+  background: #0f0a1e;
+  border: 1px solid #2e1065;
+  border-radius: 14px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.sc-item--done { border-color: #14532d; background: #052e16; }
+.sc-item--flash { animation: sc-flash 0.7s ease; }
+@keyframes sc-flash {
+  0%   { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+  40%  { box-shadow: 0 0 22px 8px rgba(34,197,94,0.45); }
+  100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); }
+}
+.sc-item-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  padding: 14px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+}
+.sc-item--done .sc-item-row { cursor: default; }
+.sc-item-emoji { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+.sc-item-body { flex: 1; min-width: 0; }
+.sc-item-title { display: block; font-size: 14px; font-weight: 700; color: #e2e8f0; margin-bottom: 4px; }
+.sc-item--done .sc-item-title { color: #4ade80; }
+.sc-item-desc { font-size: 12px; color: #64748b; line-height: 1.5; margin: 0; }
+.sc-item-icon { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+
+.sc-code-row {
+  display: flex;
+  gap: 8px;
+  padding: 0 14px 14px;
+}
+.sc-code-row--err { animation: sc-shake 0.35s ease; }
+@keyframes sc-shake {
+  0%,100% { transform: translateX(0); }
+  20%     { transform: translateX(-6px); }
+  40%     { transform: translateX(6px); }
+  60%     { transform: translateX(-4px); }
+  80%     { transform: translateX(4px); }
+}
+.sc-code-input {
+  flex: 1;
+  padding: 10px 14px;
+  background: #0a0618;
+  border: 1px solid #3730a3;
+  border-radius: 10px;
+  color: #e2e8f0;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+  scroll-margin-top: 100px;
+}
+.sc-code-input:focus { border-color: #7c3aed; }
+.sc-code-row--err .sc-code-input { border-color: #f43f5e; }
+.sc-code-submit {
+  padding: 10px 18px;
+  background: #7c3aed;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+.sc-code-submit:hover { background: #6d28d9; transform: scale(1.05); }
+
+.sc-final-btn {
+  margin: 4px 14px 18px;
+  padding: 15px 20px;
+  background: linear-gradient(135deg, #166534, #14532d);
+  border: 1px solid #16a34a;
+  border-radius: 14px;
+  color: #86efac;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  animation: sc-pulse-green 2s ease-in-out infinite;
+}
+.sc-final-btn:hover { background: linear-gradient(135deg, #15803d, #166534); transform: translateY(-2px); }
+@keyframes sc-pulse-green {
+  0%,100% { box-shadow: 0 0 0 0 rgba(22,163,74,0); }
+  50%     { box-shadow: 0 0 18px 4px rgba(22,163,74,0.3); }
+}
+
+/* ════════════════════════════════
+   PASO 3 — PREMIOS
+   ════════════════════════════════ */
+.sp-card {
+  max-width: 500px;
+  max-height: 92svh;
+  overflow-y: auto;
+  border: 1px solid #f59e0b;
+  background: #07040f;
+  border-top: 3px solid #f59e0b;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+.sp-head { text-align: center; padding: 20px 22px 14px; }
+.sp-trophy { font-size: 38px; display: block; margin-bottom: 8px; }
+.sp-label {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: #f59e0b;
+  text-transform: uppercase;
+}
+.sp-title { font-size: 26px; font-weight: 900; color: #fef3c7; margin: 10px 0 12px; }
+.sp-msg { font-size: 13px; color: #94a3b8; line-height: 1.6; margin: 0 0 10px; }
+.sp-msg:last-child { margin: 0; }
+
+.sp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 10px 14px;
+}
+.sp-prize {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 18px 12px;
+  background: #0f0a1e;
+  border: 1px solid #2e1065;
+  border-radius: 16px;
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.2s, background 0.2s, transform 0.15s;
+  position: relative;
+}
+.sp-prize:hover { border-color: #f59e0b; background: #160e00; transform: translateY(-3px); }
+.sp-prize--chosen {
+  border-color: #f59e0b;
+  background: #1c1000;
+  box-shadow: 0 0 20px rgba(245,158,11,0.25);
+}
+.sp-prize-emoji { font-size: 36px; }
+.sp-prize-title { font-size: 13px; font-weight: 700; color: #fef3c7; margin: 0; }
+.sp-prize-desc { font-size: 11px; color: #64748b; line-height: 1.4; margin: 0; }
+.sp-prize-check {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #f59e0b;
+  color: #000;
+  font-size: 9px;
+  font-weight: 800;
+  padding: 3px 7px;
+  border-radius: 99px;
+}
+.sp-confirm {
+  margin: 6px 14px 18px;
+  padding: 14px 16px;
+  background: #1c1000;
+  border: 1px solid #f59e0b;
+  border-radius: 14px;
+  text-align: center;
+}
+.sp-confirm p { font-size: 14px; color: #fef3c7; margin: 0 0 6px; }
+.sp-confirm p:last-child { margin: 0; }
+.sp-confirm-hint { font-size: 12px !important; color: #64748b !important; }
+
 /* ════════════════════════════════
    MILESTONE BAR (XP style)
    ════════════════════════════════ */
@@ -2243,8 +2637,11 @@ html, body {
   .streak-timecount-text  { display: block; }
   /* 5º — Barra de tiers */
   .milestone-wrap    { width: 90%; margin: 6px auto 10px; align-self: center; }
-  /* Hub navbar */
-  .hub-back-btn    { font-size: 11px; padding: 8px 13px; letter-spacing: 0; }
+  /* Hub navbar — grid so avatar is truly centered regardless of side widths */
+  .hub-status      { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px; padding: 10px 12px; margin: 8px 0 0; top: 8px; }
+  .hub-back-btn    { justify-self: start; font-size: 11px; padding: 8px 13px; letter-spacing: 0; }
+  .hub-skin-selector { flex: none; }
+  .hub-status-right  { justify-self: end; }
   .hub-avatar-wrap { width: 52px; height: 52px; }
   .hub-skin-img    { width: 52px; height: 52px; }
   /* Modal */
@@ -2276,6 +2673,29 @@ html, body {
   /* House */
   .house-grid      { grid-template-columns: repeat(2, 1fr); }
 
+  /* Secret Level — página completa */
+  .sl-body           { padding: 16px 14px 80px; }
+  .sc-progress-row   { padding: 10px 0 8px; }
+  .sc-bar-text       { font-size: 11px; }
+  .sc-item-row       { padding: 12px 12px; gap: 10px; }
+  .sc-item-emoji     { font-size: 20px; }
+  .sc-item-title     { font-size: 13px; }
+  .sc-item-desc      { font-size: 11px; line-height: 1.45; }
+  .sc-item-icon      { font-size: 16px; }
+  .sc-code-row       { padding: 0 12px 12px; }
+  .sc-code-input     { font-size: 16px; padding: 10px 12px; } /* 16px evita zoom en iOS */
+  .sc-code-submit    { padding: 10px 14px; font-size: 15px; }
+  .sl-final-btn      { padding: 13px 16px; font-size: 13px; }
+  .sl-prizes-intro   { padding: 14px 16px; margin-bottom: 12px; }
+  .sp-msg            { font-size: 12px; }
+  .sp-grid           { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .sp-prize          { padding: 14px 10px; gap: 5px; }
+  .sp-prize-emoji    { font-size: 30px; }
+  .sp-prize-title    { font-size: 12px; }
+  .sp-prize-desc     { font-size: 10px; line-height: 1.35; }
+  .sp-confirm        { padding: 12px 14px; }
+  .sp-confirm p      { font-size: 13px; }
+
   /* Floating */
   .float-label     { display: none; }
   .carino-btn      { padding: 12px 14px; font-size: 20px; }
@@ -2301,6 +2721,7 @@ html, body {
   .hub-card-desc   { font-size: 11px; }
   .hub-extra-btn strong { font-size: 14px; }
   /* Hub navbar — very narrow: hide skin name to avoid overflow */
+  .hub-status      { padding: 8px 10px; gap: 6px; }
   .hub-back-btn    { font-size: 10px; padding: 7px 11px; }
   .hub-avatar-wrap { width: 46px; height: 46px; }
   .hub-skin-img    { width: 46px; height: 46px; }
@@ -2319,6 +2740,18 @@ html, body {
   .section-nav-btns { gap: 4px; }
   /* Secret trigger smaller */
   .secret-trigger  { font-size: 8px; padding: 4px 9px; letter-spacing: 1.2px; }
+  /* Secret Level — pantallas muy pequeñas */
+  .sl-body         { padding: 12px 10px 80px; }
+  .sc-item-row     { padding: 10px; gap: 8px; }
+  .sc-item-emoji   { font-size: 18px; }
+  .sc-item-title   { font-size: 12px; }
+  .sc-item-desc    { font-size: 10px; }
+  .sc-code-row     { padding: 0 10px 10px; gap: 6px; }
+  .sp-prize        { padding: 12px 8px; }
+  .sp-prize-emoji  { font-size: 26px; }
+  .sp-prize-title  { font-size: 11px; }
+  .sp-prize-desc   { display: none; }
+  .sp-confirm p    { font-size: 12px; }
 }
 
 /* ════════════════════════════════════════════════════

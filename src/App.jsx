@@ -11,8 +11,10 @@ import Rey      from './components/Rey'
 import Nevado   from './components/Nevado'
 import Timeline  from './components/Timeline'
 import TimeCount  from './components/TimeCount'
-import LeaguePage from './components/LeaguePage'
-import House    from './components/House'
+import LeaguePage   from './components/LeaguePage'
+import House        from './components/House'
+import SecretLevel  from './components/SecretLevel'
+import { SC_KEY, CHALLENGES } from './data/secret'
 import './App.css'
 
 const Viewer3D = lazy(() => import('./components/Viewer3D'))
@@ -76,8 +78,13 @@ function CarinoModal({ onClose }) {
   )
 }
 
-/* ── Secret "Nivel Crítico" modal ── */
-function SecretModal({ onClose }) {
+/* ── Secret modal — solo el mensaje inicial ── */
+function SecretModal({ onClose, onNavigate }) {
+  const allDone = (() => {
+    try { return new Set(JSON.parse(localStorage.getItem(SC_KEY) || '[]')).size >= CHALLENGES.length }
+    catch { return false }
+  })()
+
   return (
     <div className="modal-overlay secret-overlay" onClick={onClose}>
       <div className="modal-card secret-card" onClick={(e) => e.stopPropagation()}>
@@ -89,22 +96,24 @@ function SecretModal({ onClose }) {
         <img src={mrpSecret} alt="Mr. P Count Pengula" className="modal-mrp secret-mrp" />
         <h2 className="secret-title">El código<br />más especial</h2>
         <p className="secret-text">
-          Sabías que Mr. P es tu brawler favorito.<br />
-          Yo también lo sabía. Por eso lo elegí.
+          Mr. P es uno de tus brawlers favoritos.<br />
+          Me pareció gracioso... y perfecto. Por eso lo elegí.
         </p>
         <div className="secret-message">
           <p>
             Hice esta página entera para dártela en un momento muy específico:
             cuando me extrañaras tanto que llegaras al código Mr. P.
-            No cualquier día — solo ese momento en que ya no aguantabas más
-            y me lo dijiste, en persona o por WhatsApp.
+            No cualquier día — solo ese momento en que me extrañaste por tercera vez.
           </p>
           <p>
-            Ese fue el momento en que yo te mandé esto. Y ahora que estás aquí,
-            ya sabes que cada parte de esta página fue hecha pensando en ti. 🐧
+            Y ahora que estás aquí, ya sabes que cada parte de esta página
+            fue hecha pensando en ti. 🐧
           </p>
         </div>
         <p className="secret-sign">— Christian 💙</p>
+        <button className="sc-enter-btn" onClick={() => { onClose(); onNavigate('secret') }}>
+          {allDone ? '🏆 Ver mi sorpresa' : '🔒 Ver los desafíos'}
+        </button>
       </div>
     </div>
   )
@@ -114,8 +123,7 @@ function SecretModal({ onClose }) {
 const VIEWS = {
   landing: Landing, hub: Hub, clasico: Clasico, agente: Agente,
   rey: Rey, nevado: Nevado, timeline: Timeline, house: House, viewer: Viewer3D,
-  timecount: TimeCount,
-  leagues:   LeaguePage,
+  timecount: TimeCount, leagues: LeaguePage, secret: SecretLevel,
 }
 
 const SECTION_ORDER = ['clasico', 'agente', 'rey', 'nevado', 'timeline', 'house']
@@ -314,7 +322,7 @@ export default function App() {
       )}
 
       {showCarino && <CarinoModal onClose={() => setShowCarino(false)} />}
-      {showSecret && <SecretModal onClose={() => setShowSecret(false)} />}
+      {showSecret && <SecretModal onClose={() => setShowSecret(false)} onNavigate={navigateTo} />}
     </div>
   )
 }
