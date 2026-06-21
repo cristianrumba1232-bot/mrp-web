@@ -83,7 +83,7 @@ function SongPlayer() {
   )
 }
 
-export default function Nevado({ navigate }) {
+export default function Nevado({ navigate, prev, next }) {
   return (
     <div className="section-page nevado-page">
       <div className="section-header" style={{ '--col': '#c084fc' }}>
@@ -98,6 +98,10 @@ export default function Nevado({ navigate }) {
             <h1 className="section-title">Emergencia emocional</h1>
             <p className="section-subtitle">Para cuando todo esté difícil. Aquí estoy.</p>
           </div>
+        </div>
+        <div className="section-nav-btns">
+          {prev && <button className="section-nav-btn" onClick={() => navigate(prev)}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>}
+          {next && <button className="section-nav-btn" onClick={() => navigate(next)}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>}
         </div>
       </div>
 

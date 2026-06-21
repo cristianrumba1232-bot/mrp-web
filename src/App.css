@@ -207,8 +207,8 @@ html, body {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin: 12px 16px 0;
-  padding: 10px 16px;
+  margin: 12px 0 0;
+  padding: 14px 16px;
   background: #111827;
   border: 1px solid #1e293b;
   border-radius: 20px;
@@ -228,7 +228,7 @@ html, body {
   font-size: 13px;
   font-weight: 700;
   cursor: pointer;
-  padding: 6px 14px;
+  padding: 10px 18px;
   border-radius: 20px;
   letter-spacing: 0.3px;
   transition: background 0.2s, color 0.2s, border-color 0.2s;
@@ -284,16 +284,16 @@ html, body {
 }
 .hub-avatar-wrap {
   position: relative;
-  width: 54px;
-  height: 54px;
+  width: 66px;
+  height: 66px;
   flex-shrink: 0;
 }
 .hub-avatar-edit {
   position: absolute;
   bottom: -1px;
   right: -1px;
-  width: 17px;
-  height: 17px;
+  width: 20px;
+  height: 20px;
   background: #1d4ed8;
   border: 2px solid #111827;
   border-radius: 50%;
@@ -304,8 +304,8 @@ html, body {
   pointer-events: none;
 }
 .hub-skin-img {
-  width: 54px;
-  height: 54px;
+  width: 66px;
+  height: 66px;
   object-fit: contain;
   filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
   transition: transform 0.2s cubic-bezier(.22,.61,.36,1);
@@ -345,9 +345,9 @@ html, body {
   gap: 6px;
   flex-shrink: 0;
 }
-.hub-status-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; }
+.hub-status-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; font-weight: 600; letter-spacing: 0.3px; }
 .status-dot {
-  width: 8px; height: 8px;
+  width: 10px; height: 10px;
   background: #22c55e;
   border-radius: 50%;
   animation: status-blink 2s ease-in-out infinite;
@@ -819,10 +819,10 @@ html, body {
   display: flex;
   align-items: center;
   gap: 12px;
-  width: calc(100% - 72px);
-  max-width: 788px;
+  width: calc(100% - 40px);
+  max-width: 820px;
   margin: 12px auto 0;
-  padding: 10px 16px;
+  padding: 14px 16px;
   background: #111827;
   border: 1px solid #1e293b;
   border-left: 3px solid var(--col);
@@ -834,14 +834,32 @@ html, body {
   top: 12px;
   z-index: 50;
 }
-.section-header::after {
-  content: '';
-  width: 8px;
-  height: 8px;
-  background: var(--col);
-  border-radius: 50%;
-  box-shadow: 0 0 8px var(--col);
+.section-nav-btns {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   flex-shrink: 0;
+}
+.section-nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 50%;
+  color: var(--col);
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  transition: background 0.2s, border-color 0.2s, transform 0.15s;
+  flex-shrink: 0;
+}
+.section-nav-btn:hover {
+  background: #334155;
+  border-color: var(--col);
+  transform: scale(1.1);
 }
 .back-btn {
   display: inline-flex;
@@ -852,7 +870,7 @@ html, body {
   font-size: 13px;
   font-weight: 700;
   cursor: pointer;
-  padding: 6px 14px;
+  padding: 10px 18px;
   border-radius: 20px;
   letter-spacing: 0.3px;
   transition: background 0.2s, color 0.2s, border-color 0.2s;
@@ -864,9 +882,9 @@ html, body {
   color: #e2e8f0;
   border-color: #475569;
 }
-.section-header-inner { flex: 1; display: flex; align-items: center; gap: 12px; min-width: 0; }
+.section-header-inner { flex: 1; display: flex; align-items: center; justify-content: center; gap: 12px; min-width: 0; }
 .section-mrp {
-  width: 54px; height: 54px;
+  width: 66px; height: 66px;
   object-fit: contain;
   flex-shrink: 0;
   animation: float 3.5s ease-in-out infinite;
@@ -2179,25 +2197,24 @@ html, body {
   .hub-card-mrp    { width: 44px; height: 44px; }
   .hub-sections-title { font-size: 11px; }
 
-  /* Streak — layout vertical en móvil */
+  /* Streak — layout en móvil */
   .streak-wrap       { flex-direction: column; align-items: center; padding: 4px 0; gap: 10px; }
   .streak-panel      { padding: 14px 14px 14px; border-radius: 18px; }
   .streak-title      { font-size: clamp(20px, 6vw, 30px); letter-spacing: 1.5px; margin-bottom: 10px; }
-  /* Columna principal vertical */
-  .streak-main       { flex-direction: column; align-items: center; gap: 10px; margin-bottom: 10px; }
-  /* 1º — Calendario */
-  .streak-cal-outer  { transform: none; order: 1; }
-  .streak-cal-wrap   { flex: none; padding: 14px 0; }
-  .streak-cal-official { width: clamp(100px, 24vw, 125px); }
-  .streak-cal-number   { font-size: clamp(30px, 8vw, 44px); }
-  .streak-flame-c    { width: 42px; }
-  .streak-flame-l, .streak-flame-r { width: 26px; }
-  /* 2º — Contador de días */
-  .streak-info       { flex: none; transform: none; order: 2; text-align: center; width: 100%; }
+  /* Fila: calendario + contador lado a lado; galleta ocupa fila completa abajo */
+  .streak-main       { flex-direction: row; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 14px; margin-bottom: 10px; }
+  /* 1º — Calendario (izquierda) */
+  .streak-cal-outer  { transform: none; order: 1; flex-shrink: 0; }
+  .streak-cal-wrap   { flex: none; padding: 10px 0; }
+  .streak-cal-official { width: clamp(100px, 26vw, 130px); }
+  .streak-cal-number   { font-size: clamp(28px, 8vw, 42px); }
+  .streak-flame-c    { width: 160px; }
+  .streak-flame-l, .streak-flame-r { width: 28px; }
+  /* 2º — Contador de días (derecha) */
+  .streak-info       { flex: 1; min-width: 130px; transform: none; order: 2; text-align: center; }
   .streak-info-days  { font-size: clamp(22px, 7vw, 32px); }
-  .streak-info-date  { font-size: 10px; text-align: center; }
-  .streak-info-label { text-align: center; }
-  /* 3º — Galleta de la fortuna — visible en móvil */
+  .streak-info-date  { font-size: 10px; }
+  /* 3º — Galleta de la fortuna — fila completa debajo */
   .streak-scroll-col {
     display: flex;
     transform: none;
@@ -2227,9 +2244,9 @@ html, body {
   /* 5º — Barra de tiers */
   .milestone-wrap    { width: 90%; margin: 6px auto 10px; align-self: center; }
   /* Hub navbar */
-  .hub-back-btn    { font-size: 11px; padding: 5px 10px; letter-spacing: 0; }
-  .hub-avatar-wrap { width: 42px; height: 42px; }
-  .hub-skin-img    { width: 42px; height: 42px; }
+  .hub-back-btn    { font-size: 11px; padding: 8px 13px; letter-spacing: 0; }
+  .hub-avatar-wrap { width: 52px; height: 52px; }
+  .hub-skin-img    { width: 52px; height: 52px; }
   /* Modal */
   .modal-card      { padding: 24px 20px; margin: 0 16px; max-height: 88svh; overflow-y: auto; }
   .modal-mrp       { width: 80px; }
@@ -2249,11 +2266,12 @@ html, body {
 
   /* Sections */
   .section-body    { padding: 24px 16px 80px; }
-  .section-header  { margin: 8px auto 0; padding: 8px 12px; top: 8px; }
+  .section-header  { width: calc(100% - 28px); margin: 8px auto 0; padding: 10px 12px; top: 8px; }
   .section-header-inner { gap: 8px; }
-  .section-mrp     { width: 44px; height: 44px; }
+  .section-mrp     { width: 52px; height: 52px; }
   .section-title   { font-size: clamp(13px, 3.5vw, 16px); }
-  .back-btn        { padding: 5px 10px; font-size: 12px; }
+  .back-btn        { padding: 8px 13px; font-size: 12px; }
+  .section-nav-btn { width: 30px; height: 30px; font-size: 16px; }
 
   /* House */
   .house-grid      { grid-template-columns: repeat(2, 1fr); }
@@ -2283,9 +2301,9 @@ html, body {
   .hub-card-desc   { font-size: 11px; }
   .hub-extra-btn strong { font-size: 14px; }
   /* Hub navbar — very narrow: hide skin name to avoid overflow */
-  .hub-back-btn    { font-size: 10px; padding: 4px 8px; }
-  .hub-avatar-wrap { width: 38px; height: 38px; }
-  .hub-skin-img    { width: 38px; height: 38px; }
+  .hub-back-btn    { font-size: 10px; padding: 7px 11px; }
+  .hub-avatar-wrap { width: 46px; height: 46px; }
+  .hub-skin-img    { width: 46px; height: 46px; }
   .hub-skin-name   { display: none; }
   .hub-skin-info   { max-width: 44px; }
   /* Viewer3D */
@@ -2294,8 +2312,11 @@ html, body {
   /* Modal */
   .carino-card     { min-height: 320px; }
   /* Section header compact on tiny phones */
-  .section-header  { width: calc(100% - 28px); padding: 6px 10px; }
-  .section-mrp     { width: 36px; height: 36px; }
+  .section-header  { width: calc(100% - 28px); padding: 8px 10px; gap: 8px; }
+  .section-mrp     { width: 44px; height: 44px; }
+  .back-btn        { padding: 6px 10px; font-size: 11px; }
+  .section-nav-btn { width: 26px; height: 26px; }
+  .section-nav-btns { gap: 4px; }
   /* Secret trigger smaller */
   .secret-trigger  { font-size: 8px; padding: 4px 9px; letter-spacing: 1.2px; }
 }

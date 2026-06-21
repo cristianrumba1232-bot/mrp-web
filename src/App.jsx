@@ -118,6 +118,8 @@ const VIEWS = {
   leagues:   LeaguePage,
 }
 
+const SECTION_ORDER = ['clasico', 'agente', 'rey', 'nevado', 'timeline', 'house']
+
 export default function App() {
   const alreadyIn = localStorage.getItem('mrp_activated') === 'true'
   const [view,        setView]        = useState(alreadyIn ? 'hub' : 'landing')
@@ -131,6 +133,7 @@ export default function App() {
 
   const logout = useCallback(() => {
     localStorage.removeItem('mrp_activated')
+    localStorage.removeItem('mrp_last_active')
     sessionStorage.removeItem('mrp_scratched')
     setActivated(false)
     setView('landing')
@@ -140,24 +143,44 @@ export default function App() {
     window.history.replaceState({ view: 'landing' }, '')
   }, [])
 
-  /* ── Inactivity timer: 30 min ── */
+  /* ── Inactivity timer: 30 min ──
+     setTimeout solo para foreground; visibilitychange cubre cuando el
+     teléfono se bloquea o la app pasa a segundo plano (los timers se pausan). */
   useEffect(() => {
     const TIMEOUT = 30 * 60 * 1000
+    const TS_KEY  = 'mrp_last_active'
 
     const reset = () => {
+      if (localStorage.getItem('mrp_activated') !== 'true') return
+      localStorage.setItem(TS_KEY, Date.now().toString())
       clearTimeout(inactiveRef.current)
-      if (localStorage.getItem('mrp_activated') === 'true') {
-        inactiveRef.current = setTimeout(logout, TIMEOUT)
+      inactiveRef.current = setTimeout(logout, TIMEOUT)
+    }
+
+    const onVisible = () => {
+      if (document.hidden) return
+      if (localStorage.getItem('mrp_activated') !== 'true') return
+      const last = parseInt(localStorage.getItem(TS_KEY) || '0', 10)
+      const elapsed = Date.now() - last
+      if (elapsed >= TIMEOUT) {
+        logout()
+      } else {
+        clearTimeout(inactiveRef.current)
+        inactiveRef.current = setTimeout(logout, TIMEOUT - elapsed)
       }
     }
 
     const events = ['mousemove', 'mousedown', 'keydown', 'touchstart', 'scroll', 'click']
     events.forEach(e => window.addEventListener(e, reset, { passive: true }))
+    document.addEventListener('visibilitychange', onVisible)
+    window.addEventListener('pageshow', onVisible)
     reset()
 
     return () => {
       clearTimeout(inactiveRef.current)
       events.forEach(e => window.removeEventListener(e, reset))
+      document.removeEventListener('visibilitychange', onVisible)
+      window.removeEventListener('pageshow', onVisible)
     }
   }, [logout])
 
@@ -232,6 +255,9 @@ export default function App() {
   }, [])
 
   const CurrentView = VIEWS[view] ?? Hub
+  const sectionIdx  = SECTION_ORDER.indexOf(view)
+  const prevSection = sectionIdx >= 0 ? SECTION_ORDER[(sectionIdx - 1 + SECTION_ORDER.length) % SECTION_ORDER.length] : null
+  const nextSection = sectionIdx >= 0 ? SECTION_ORDER[(sectionIdx + 1) % SECTION_ORDER.length] : null
 
   return (
     <div className="app">
@@ -245,6 +271,8 @@ export default function App() {
                 navigate={navigateTo}
                 skinIdx={skinIdx}
                 setSkinIdx={setSkinIdx}
+                prev={prevSection}
+                next={nextSection}
               />
           }
         </Suspense>

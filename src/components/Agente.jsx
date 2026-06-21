@@ -12,7 +12,7 @@ function loadDone() {
   return Array(MISSIONS.length).fill(false)
 }
 
-export default function Agente({ navigate }) {
+export default function Agente({ navigate, prev, next }) {
   const [done, setDone] = useState(loadDone)
 
   const toggle = (i) => setDone((prev) => {
@@ -36,6 +36,10 @@ export default function Agente({ navigate }) {
             <h1 className="section-title">Misiones juntos</h1>
             <p className="section-subtitle">{count} de {MISSIONS.length} misiones completadas</p>
           </div>
+        </div>
+        <div className="section-nav-btns">
+          {prev && <button className="section-nav-btn" onClick={() => navigate(prev)}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>}
+          {next && <button className="section-nav-btn" onClick={() => navigate(next)}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>}
         </div>
       </div>
 

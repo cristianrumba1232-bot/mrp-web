@@ -1,7 +1,7 @@
 import { TIMELINE } from '../data/content'
 import mrpImg from '../assets/mrp_skin4.png'
 
-export default function Timeline({ navigate }) {
+export default function Timeline({ navigate, prev, next }) {
   return (
     <div className="section-page timeline-page">
       <div className="section-header" style={{ '--col': '#a855f7' }}>
@@ -13,6 +13,10 @@ export default function Timeline({ navigate }) {
             <h1 className="section-title">Línea del tiempo</h1>
             <p className="section-subtitle">Nuestra historia, año a año.</p>
           </div>
+        </div>
+        <div className="section-nav-btns">
+          {prev && <button className="section-nav-btn" onClick={() => navigate(prev)}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>}
+          {next && <button className="section-nav-btn" onClick={() => navigate(next)}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>}
         </div>
       </div>
 

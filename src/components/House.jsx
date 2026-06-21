@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { HOUSE_ROOMS } from '../data/content'
 import mrpImg from '../assets/mrp_skin6.png'
 
-export default function House({ navigate }) {
+export default function House({ navigate, prev, next }) {
   const [open, setOpen] = useState(null)
 
   return (
@@ -16,6 +16,10 @@ export default function House({ navigate }) {
             <h1 className="section-title">Nuestra casa del futuro</h1>
             <p className="section-subtitle">Toca cada rincón para ver la nota.</p>
           </div>
+        </div>
+        <div className="section-nav-btns">
+          {prev && <button className="section-nav-btn" onClick={() => navigate(prev)}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>}
+          {next && <button className="section-nav-btn" onClick={() => navigate(next)}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>}
         </div>
       </div>
 
