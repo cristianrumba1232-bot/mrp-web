@@ -27,6 +27,31 @@ function AnimatedCounter({ target }) {
   return <>{val.toLocaleString()}</>
 }
 
+const MILESTONES = [500, 750, 1000, 1250, 1500, 1750, 2000, 2500, 3000, 4000, 5000]
+
+function MilestoneBar({ days }) {
+  const next = MILESTONES.find(m => m > days) ?? Math.ceil(days / 1000) * 1000 + 1000
+  const prev = [...MILESTONES].reverse().find(m => m <= days) ?? 0
+  const pct  = Math.min(100, Math.round(((days - prev) / (next - prev)) * 100))
+  const remaining = next - days
+
+  return (
+    <div className="milestone-wrap">
+      <div className="milestone-header">
+        <span className="milestone-label">PRÓXIMO HITO</span>
+        <span className="milestone-target">🏆 {next.toLocaleString()} días</span>
+      </div>
+      <div className="milestone-bar-bg">
+        <div className="milestone-bar-fill" style={{ width: `${pct}%` }} />
+        <span className="milestone-bar-pct">{pct}%</span>
+      </div>
+      <p className="milestone-remaining">
+        Faltan <strong>{remaining}</strong> días para el siguiente hito ✨
+      </p>
+    </div>
+  )
+}
+
 function StreakCounter({ days }) {
   const calRef = useRef(null)
   const [tilt, setTilt] = useState({ rx: 0, ry: 0 })
@@ -53,6 +78,7 @@ function StreakCounter({ days }) {
         <h2 className="streak-title">DÍAS JUNTOS</h2>
 
         <div className="streak-main">
+          <div className="streak-cal-outer">
           <div
             ref={calRef}
             className="streak-cal-wrap"
@@ -64,17 +90,15 @@ function StreakCounter({ days }) {
             }}
           >
             <div className="streak-fire" aria-hidden="true">
-              <img src={bsFlame} className="streak-flame streak-flame-l" alt="" />
               <img src={bsFlame} className="streak-flame streak-flame-c" alt="" />
-              <img src={bsFlame} className="streak-flame streak-flame-r" alt="" />
             </div>
             <div className="streak-cal-official">
               <img src={calendarIcon} alt="" className="streak-cal-icon" />
               <div className="streak-cal-overlay">
                 <div className="streak-cal-number"><AnimatedCounter target={days} /></div>
-                <div className="streak-cal-star">✨</div>
               </div>
             </div>
+          </div>
           </div>
 
           <div className="streak-info">
@@ -85,16 +109,19 @@ function StreakCounter({ days }) {
             </p>
             <p className="streak-info-date">desde el 24 · mayo · 2022 💙</p>
           </div>
+
+          {/* Galleta de la fortuna — tercera columna, mismo diseño del banner */}
+          <div className="streak-scroll-area streak-scroll-col">
+            <img src={fortuneIcon} alt="" className="streak-coin streak-coin-l" />
+            <div className="streak-scroll">
+              <p className="streak-scroll-text">"Sigues siendo mi persona favorita."</p>
+              <span className="streak-scroll-sign">— Christian 💙</span>
+            </div>
+            <img src={fortuneIcon} alt="" className="streak-coin streak-coin-r" />
+          </div>
         </div>
 
-        <div className="streak-scroll-area">
-          <img src={fortuneIcon} alt="" className="streak-coin streak-coin-l" />
-          <div className="streak-scroll">
-            <p className="streak-scroll-text">"Sigues siendo mi persona favorita."</p>
-            <span className="streak-scroll-sign">— Christian 💙</span>
-          </div>
-          <img src={fortuneIcon} alt="" className="streak-coin streak-coin-r" />
-        </div>
+        <MilestoneBar days={days} />
 
       </div>
     </div>
