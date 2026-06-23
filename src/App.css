@@ -1690,6 +1690,19 @@ html, body {
   border-radius: 99px;
   transition: width 0.12s linear;
 }
+.sl-cancel-btn {
+  margin-top: 8px;
+  background: none;
+  border: 1px solid #334155;
+  color: #475569;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.sl-cancel-btn:hover { border-color: #64748b; color: #94a3b8; }
 .sl-body {
   max-width: 640px;
   margin: 0 auto;

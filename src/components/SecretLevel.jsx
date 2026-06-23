@@ -60,6 +60,7 @@ export default function SecretLevel({ navigate }) {
             <div className="sl-bar-fill" style={{ width: `${loadPct}%` }} />
           </div>
           <p className="sc-loading-pct">{loadPct}%</p>
+          <button className="sl-cancel-btn" onClick={() => navigate('hub')}>Cancelar</button>
         </div>
       </div>
     )
